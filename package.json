@@ -1,0 +1,25 @@
+{
+  "name": "nutrition-cooking-app",
+  "version": "1.0.0",
+  "description": "App made for craft recipes and save nutrition values",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "keywords": [
+    "nutrition",
+    "cooking",
+    "meal",
+    "calories"
+  ],
+  "author": "Tlacaelel Leon",
+  "license": "ISC",
+  "dependencies": {
+    "antd": "^4.12.3",
+    "fontsource-roboto": "^4.0.0",
+    "next": "^10.0.7",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  }
+}
