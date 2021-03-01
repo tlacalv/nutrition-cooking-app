@@ -7,25 +7,21 @@ import Link from 'next/link'
 import {useRouter} from 'next/router'
 
 const { Title, Text } = Typography
-export default function Signup() {
+export default function Login() {
   const router = useRouter()
-  const { signup } = useAuth()
+  const { login } = useAuth()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
 
   async function onFinish(values) {
     setLoading(true)
-    const { name, email, password, password_confirm } = values
+    const { email, password } = values
 
-    if(password !== password_confirm) {
-      setError('Passwords do not match!')
-      return;
-    }
     try {
       setError('')
-      await signup({name,email,password})
-      router.push('/login')
+      await login(email, password)
+      router.push('/')
 
     } catch(err) {
       setError(err)
@@ -40,7 +36,7 @@ export default function Signup() {
           name="description" 
           content="Store your ingredients and recipes nutrition values so you can stop worring about them"
         />
-        <title>Sign up - Nutrition cooking</title>
+        <title>Log In - Nutrition cooking</title>
       </Head>
       <Form 
         className={styles.middle_box}
@@ -48,24 +44,11 @@ export default function Signup() {
       >
         <Row>
           <Col span={24}>
-            <Title className="text-center">Sign Up</Title>
+            <Title className="text-center">Log In</Title>
           </Col>
         </Row>
         {error && <Alert message={error} type="error" showIcon />}
         <br></br>
-        <Form.Item
-          name="name"
-          rules={[
-            {
-              required: true,
-              message: 'Please input your name!',
-            },
-          ]}
-        >
-          <Input 
-            placeholder="Name"
-          />
-        </Form.Item>
         <Form.Item
           name="email"
           rules={[
@@ -94,26 +77,14 @@ export default function Signup() {
             placeholder="Password"
           />
         </Form.Item>
-        <Form.Item
-          name="password_confirm"
-          rules={[
-            {
-              required: true,
-              message: 'Please input your password confirmation!',
-            },
-          ]}
-        >
-          <Input 
-            type="password" 
-            placeholder="Password"
-          />
-        </Form.Item>
+        
         <Form.Item>
           <div className="flex flex-hc">
             <Button 
               type="primary"
               size="large"
               htmlType="submit"
+              block
               loading={loading}
             >
               Sign Up
@@ -124,9 +95,9 @@ export default function Signup() {
         <Row justify="center">
           <Col span={24}>
             <Text className="text-center block">
-              Already have an account?{' '} 
-              <Link href="/login">
-                  Log In
+              Don't have an account?{' '} 
+              <Link href="/signup">
+                  Sign Up
               </Link>
             </Text>
           </Col>

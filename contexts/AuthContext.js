@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import Api from '../api.js'
-
+import {useSession, signout, signin, registerUser} from '../utils/auth'
 const AuthContext = React.createContext()
 
 export function useAuth() {
@@ -9,51 +8,34 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState()
+  const [JWT, setJWT] = useState('')
   const [loading, setLoading] = useState(true)
 
   function signup(newUser) {
-    return Api.post('auth/sign-up', newUser)
+    return registerUser(newUser)
   }
   function logout() {
-    return auth.signOut()
+    return signout()
   }
-  function  login(email, password) {
-    localStorage.setItem('token',JSON.stringify(newUser))
-    console.log(JSON.parse(localStorage.getItem('token')))
-    return auth.signInWithEmailAndPassword(email, password)
-  }
-  function resetPassword(email) {
-    return auth.sendPasswordResetEmail(email)
-  }
-  function updateEmail(email) {
-    return currentUser.updateEmail(email)
-  }
-  function updatePassword(password) {
-    return currentUser.updatePassword(password)
+  async function login(email, password) {
+    const {token, user} = await signin(email,password)
+    setJWT(token)
+    setCurrentUser(user)
   }
 
-  useEffect(() => {
-    //check jwt existence
-    //check jwt expiration
-    //check refesh token existence
-    //check refresh token expiration
-    //set current user to undefined or user from JWT
-    // const unsuscribe = auth.onAuthStateChanged(user => {
-    //   setCurrentUser(user)
-    //   setLoading(false)
-    // })
+  useEffect(async () => {
+    const {user, token} = await useSession()
+    setJWT(token)
+    setCurrentUser(user)
     setLoading(false)
-    // return unsuscribe
   }, [])
   
   const value = {
     currentUser,
+    JWT,
     login,
     signup,
-    logout,
-    resetPassword,
-    updateEmail,
-    updatePassword,
+    logout
   }
   return (
     <AuthContext.Provider value ={value}>
