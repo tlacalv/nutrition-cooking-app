@@ -5,7 +5,6 @@ import jsonwebtoken from 'jsonwebtoken'
 export const useSession = async () => {
   const refreshToken = localStorage.getItem('refreshToken')
   if(refreshToken !== 'undefined' && refreshToken) {
-    console.log(refreshToken)
     const {token, status} = await Api.post('auth/token',{
       token: refreshToken
     })
