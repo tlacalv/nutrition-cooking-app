@@ -2,14 +2,14 @@ import Layout from "../../components/Layout";
 import Head from "next/head";
 import SearchBar from "../../components/SearchBar";
 
-export default function Ingredients() {
+export default function Recipes() {
   return (
     <Layout>
       <Head>
-        <title>Ingredients - Nutrition cooking</title>
+        <title>Recipes - Nutrition cooking</title>
       </Head>
       <SearchBar />
-      <div>Ingredients</div>
+      <div>Recipes</div>
     </Layout>
   );
 }
