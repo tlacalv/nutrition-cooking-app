@@ -8,7 +8,7 @@ export default function Ingredients() {
       <Head>
         <title>Ingredients - Nutrition cooking</title>
       </Head>
-      <SearchBar />
+      <SearchBar search={(e) => {console.log('search ingredient', e.target.value)}} />
       <div>Ingredients</div>
     </Layout>
   );
