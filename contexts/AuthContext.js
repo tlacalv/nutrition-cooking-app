@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
 import {useSession, signout, signin, registerUser} from '../utils/auth'
-import {useRouter} from 'next/router'
 const PUBLIC_ROUTES = [
   '/',
   '/login',
@@ -41,23 +40,23 @@ export function AuthProvider({ children }) {
     JWT,
     login,
     signup,
-    logout
+    logout,
+    loading
   }
   return (
     <AuthContext.Provider value ={value}>
-      {!loading && children}
+      {children}
     </AuthContext.Provider>
   )
 }
 
 export const PrivateRoute = ({ children }) => {
   const { currentUser, loading } = useAuth();
-  const router = useRouter();
-  console.log(router.pathname)
 
-  if (loading || (!currentUser && !PUBLIC_ROUTES.includes(router.pathname))){
-    router.push('/login')
-    return <div>Unauthorized</div>
-  }
-  return children;
+  useEffect(() => {
+    if (!loading && (!currentUser && !PUBLIC_ROUTES.includes(window.location.pathname))){
+      window.location.replace('/')
+    }
+  },[typeof window !== "undefined" ? window.location.pathname: '', loading])
+  return (children);
 };
