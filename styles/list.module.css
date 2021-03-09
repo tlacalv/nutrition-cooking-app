@@ -1,0 +1,10 @@
+.table:nth-child(odd)  {
+  /* background-color: #888; */
+}
+.skeleton_row{
+  width: 250px;
+  margin: .3rem 0;
+}
+.list {
+  row-gap: 1rem !important;
+}

@@ -27,3 +27,17 @@ code {
 .flex-hc{
   justify-content: center;
 }
+
+tr:hover {
+  background-color: #efefef;
+}
+tr{
+  transition: .5s;
+  border-bottom: 1px solid #eee;
+}
+td {
+  padding: .7rem;
+}
+table{
+  width: 100%;
+}
