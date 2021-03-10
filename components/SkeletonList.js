@@ -8,9 +8,8 @@ export default function SkeletonList(props) {
         .fill()
         .map((item, index) => {
           return (
-            <Col>
+            <Col key={index}>
               <Card
-                key={index}
                 title={<Skeleton.Input style={{ width: 100 }} active />}
                 style={{ width: 300 }}
                 bodyStyle={{ padding: 10 }}

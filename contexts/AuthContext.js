@@ -29,9 +29,18 @@ export function AuthProvider({ children }) {
   }
 
   useEffect(async () => {
+    let interval;
     const {user, token} = await useSession()
-    setJWT(token)
-    setCurrentUser(user)
+    if(user && token) {
+      setJWT(token)
+      setCurrentUser(user)
+      clearInterval(interval)
+      interval = setInterval(async () => {
+        const {user, token} = await useSession()
+        setJWT(token)
+        setCurrentUser(user)
+      },840000);
+    }
     setLoading(false)
   }, [])
   

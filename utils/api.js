@@ -20,6 +20,9 @@ class Api {
           }
         }
       )
+      if(response.status === 401) {
+        throw(response.status)
+      }
       const jsonData = await response.json()
       return {...jsonData, status: response.status}
     } catch(error) {
