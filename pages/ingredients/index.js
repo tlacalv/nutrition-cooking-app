@@ -3,24 +3,20 @@ import Head from "next/head";
 import { useAuth } from "../../contexts/AuthContext";
 import SearchBar from "../../components/SearchBar";
 import useSWR from "swr";
-import { Row } from "antd";
+import { Row, Button } from "antd";
 import styles from "../../styles/list.module.css";
-import ElementsList from '../../components/ElementsList'
-import SkeletonList from '../../components/SkeletonList'
-import {useSession} from '../../utils/auth'
-
-
-
+import ElementsList from "../../components/ElementsList";
+import SkeletonList from "../../components/SkeletonList";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/router";
 
 export default function Ingredients() {
+  const router = useRouter()
   const { currentUser, JWT } = useAuth();
   const { data: ingredients, error } = useSWR(
     !currentUser ? false : ["ingredients", JWT]
   );
-  if (error) {
-    console.log('ñoco',error)
-    Promise.resolve(useSession())
-  }
   return (
     <Layout>
       <Head>
@@ -36,7 +32,16 @@ export default function Ingredients() {
         {!(ingredients || error) ? (
           <SkeletonList elements={20} />
         ) : (
-          <ElementsList list={ingredients.data} />
+          <>
+            <ElementsList list={ingredients.data} />
+            <Button
+              type="primary"
+              className={styles.addBtn}
+              icon={<FontAwesomeIcon icon={faPlus} />}
+              shape="circle"
+              onClick={() => {router.push('/ingredients/add')}}
+            ></Button>
+          </>
         )}
       </Row>
     </Layout>
