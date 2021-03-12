@@ -11,7 +11,10 @@ import {
   InputNumber,
 } from "antd";
 import styles from "../../styles/viewlayout.module.css";
+import Api from "../../utils/api";
+import { useAuth } from "../../contexts/AuthContext";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 const { Title, Text } = Typography;
 const positiveNumberVal = () => ({
@@ -31,10 +34,37 @@ const nonZero = () => ({
   },
 });
 export default function add() {
+  const router = useRouter();
+  const { JWT } = useAuth();
   const [loading, setLoading] = useState(false);
 
   const [error, setError] = useState("");
-  function onFinish() {
+  async function onFinish({
+    name,
+    portion,
+    calories: portionCal,
+    fat: portionFat,
+    carbohydrates: portionCarb,
+    protein: portionProt,
+  }) {
+    setError("");
+    setLoading(true);
+    let postData = { name };
+    const calories = (portionCal / portion) * 100;
+    const fat = (portionFat / portion) * 100;
+    const carbohydrate = (portionCarb / portion) * 100;
+    const protein = (portionProt / portion) * 100;
+    postData = { ...postData, calories, fat, carbohydrate, protein };
+    try {
+      const response = await Api.post("ingredients", postData, {
+        Authorization: `Bearer ${JWT}`,
+      });
+      setLoading(false);
+      router.push("/ingredients");
+    } catch (error) {
+      setError(error);
+      setLoading(false);
+    }
   }
   return (
     <ViewLayout title="Add" subTitle="Ingredients">
@@ -65,10 +95,13 @@ export default function add() {
                   message: "Portion size is needed",
                 },
                 positiveNumberVal,
-                nonZero
+                nonZero,
               ]}
             >
-              <InputNumber className={styles.int_input} placeholder="gr" />
+              <InputNumber
+                className={styles.int_input}
+                placeholder="Portion size in gr"
+              />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -91,12 +124,30 @@ export default function add() {
         </Row>
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item name="fat" rules={[positiveNumberVal]}>
+            <Form.Item
+              name="fat"
+              rules={[
+                {
+                  required: true,
+                  message: "Fat content is needed",
+                },
+                positiveNumberVal,
+              ]}
+            >
               <InputNumber className={styles.int_input} placeholder="Fat" />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item name="carbohydrates" rules={[positiveNumberVal]}>
+            <Form.Item
+              name="carbohydrates"
+              rules={[
+                {
+                  required: true,
+                  message: "Carbohydrate content is needed",
+                },
+                positiveNumberVal,
+              ]}
+            >
               <InputNumber
                 className={styles.int_input}
                 placeholder="Carbohydrates"
@@ -106,7 +157,16 @@ export default function add() {
         </Row>
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item name="protein" rules={[positiveNumberVal]}>
+            <Form.Item
+              name="protein"
+              rules={[
+                {
+                  required: true,
+                  message: "Protein content is needed",
+                },
+                positiveNumberVal,
+              ]}
+            >
               <InputNumber className={styles.int_input} placeholder="Protein" />
             </Form.Item>
           </Col>

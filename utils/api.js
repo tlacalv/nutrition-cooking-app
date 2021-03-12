@@ -48,7 +48,7 @@ class Api {
       return {...jsonData, status: response.status}
 
     } catch(error) {
-      console.error('api: ',error )
+      throw('api: ',error )
     }
   }
   async delete(uri, body, headers={}) {
