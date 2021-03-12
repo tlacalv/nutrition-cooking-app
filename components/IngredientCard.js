@@ -1,14 +1,30 @@
-import { Col, Card, Row, Typography } from "antd";
+import { Col, Card, Row, Typography, message } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { gold } from "@ant-design/colors";
 import styles from "../styles/list.module.css";
+import Api from "../utils/api";
+import useSWR, { mutate } from "swr";
+import { useAuth } from "../contexts/AuthContext";
+
 const { Title } = Typography;
 
 export default function IngredientCard(props) {
+  const { JWT } = useAuth();
   const { ingredient } = props;
-  function onDelete(e) {
-    console.log(e);
+  async function onDelete() {
+    try {
+      await Api.delete(
+        `ingredients/${ingredient._id}`,
+        {},
+        { Authorization: `Bearer ${JWT}` }
+      );
+      mutate(["ingredients", JWT]);
+      message.success("Element deleted");
+    } catch (error) {
+      message.error("Something went wrong while deleting");
+      console.log(error);
+    }
   }
   function onEdit() {}
   return (

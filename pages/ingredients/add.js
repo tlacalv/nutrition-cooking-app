@@ -62,7 +62,8 @@ export default function add() {
       setLoading(false);
       router.push("/ingredients");
     } catch (error) {
-      setError(error);
+      console.log(error)
+      setError(error.message);
       setLoading(false);
     }
   }
