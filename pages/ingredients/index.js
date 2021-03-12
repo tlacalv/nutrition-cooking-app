@@ -28,7 +28,7 @@ export default function Ingredients() {
         }}
       />
 
-      <Row gutter={8} className={styles.list}>
+      <Row gutter={8} className={styles.list} justify="center">
         {!(ingredients || error) ? (
           <SkeletonList elements={20} />
         ) : (

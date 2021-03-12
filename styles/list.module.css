@@ -8,7 +8,7 @@
 .addBtn {
   width: 4.5rem;
   height: 4.5rem;
-  position: absolute;
+  position: fixed;
   bottom: calc(100vh/20);
   right: calc(100vw/20);
 }
