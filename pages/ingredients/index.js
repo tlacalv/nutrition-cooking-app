@@ -5,14 +5,14 @@ import SearchBar from "../../components/SearchBar";
 import useSWR from "swr";
 import { Row, Button } from "antd";
 import styles from "../../styles/list.module.css";
-import ElementsList from "../../components/ElementsList";
+import IngredientCard from "../../components/IngredientCard";
 import SkeletonList from "../../components/SkeletonList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
 
 export default function Ingredients() {
-  const router = useRouter()
+  const router = useRouter();
   const { currentUser, JWT } = useAuth();
   const { data: ingredients, error } = useSWR(
     !currentUser ? false : ["ingredients", JWT]
@@ -33,13 +33,18 @@ export default function Ingredients() {
           <SkeletonList elements={20} />
         ) : (
           <>
-            <ElementsList list={ingredients.data} />
+            {ingredients.data.map((item) => (
+              <IngredientCard key={item._id} ingredient={item} />
+            ))}
+
             <Button
               type="primary"
               className={styles.addBtn}
               icon={<FontAwesomeIcon icon={faPlus} />}
               shape="circle"
-              onClick={() => {router.push('/ingredients/add')}}
+              onClick={() => {
+                router.push("/ingredients/add");
+              }}
             ></Button>
           </>
         )}
