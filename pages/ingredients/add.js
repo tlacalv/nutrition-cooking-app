@@ -166,7 +166,7 @@ export default function add() {
               htmlType="submit"
               loading={loading}
             >
-              Sign Up
+              Save
             </Button>
           </div>
         </Form.Item>
