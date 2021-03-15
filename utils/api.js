@@ -51,6 +51,27 @@ class Api {
       throw('api: ',error )
     }
   }
+  async put(uri, body, headers={}) {
+    try {
+      const response = await fetch(
+        `${this.baseUrl}${uri}`,
+        {
+          method: 'PUT',
+          mode: 'cors',
+          headers: {
+            ...this.headers,
+            ...headers
+          },
+          body: JSON.stringify(body)
+        }
+      )
+      const jsonData = await response.json()
+      return {...jsonData, status: response.status}
+
+    } catch(error) {
+      throw('api: ',error )
+    }
+  }
   async delete(uri, body, headers={}) {
     try {
       const response = await fetch(
