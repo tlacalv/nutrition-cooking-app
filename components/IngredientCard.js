@@ -4,6 +4,7 @@ import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { gold } from "@ant-design/colors";
 import styles from "../styles/list.module.css";
 import Api from "../utils/api";
+import Link from "next/link";
 import useSWR, { mutate } from "swr";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -36,11 +37,9 @@ export default function IngredientCard(props) {
           bodyStyle={{ padding: 0 }}
           style={{ minWidth: 300 }}
           actions={[
-            <FontAwesomeIcon
-              style={{ width: "100%" }}
-              onClick={onEdit}
-              icon={faEdit}
-            />,
+            <Link href={`/ingredients/${ingredient._id}`}>
+              <FontAwesomeIcon style={{ width: "100%" }} icon={faEdit} />
+            </Link>,
             <FontAwesomeIcon
               style={{ width: "100%" }}
               onClick={onDelete}

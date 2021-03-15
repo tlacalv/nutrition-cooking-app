@@ -16,10 +16,9 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { nonZero, positiveNumberVal } from '../../utils/validation';
+ 
 
-
-const { Title, Text } = Typography;
-export default function add() {
+export default function Ingredient() {
   const router = useRouter();
   const { JWT } = useAuth();
   const [loading, setLoading] = useState(false);
@@ -54,7 +53,7 @@ export default function add() {
     }
   }
   return (
-    <ViewLayout title="Add" subTitle="Ingredients">
+    <ViewLayout title="Edit" subTitle={`Ingredient`}>
       <Head>
         <title>Add Ingredients - Nutrition cooking</title>
       </Head>
