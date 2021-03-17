@@ -89,7 +89,7 @@ export default function Ingredient() {
                 },
               ]}
             >
-              <Input placeholder="Name" value="{response.data.name}" />
+              <Input placeholder="Name" />
             </Form.Item>
             <Row gutter={16}>
               <Col span={12}>
