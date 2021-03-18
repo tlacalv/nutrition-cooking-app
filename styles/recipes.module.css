@@ -1,0 +1,42 @@
+.search {
+  position: relative;
+}
+.list, .skeleton_list {
+  padding: 0;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  list-style-type: none;
+  border-radius: 0 0 .3rem .3rem;
+  overflow-x: hidden;
+  max-height: 300px;
+  position: absolute;
+  width: 100%;
+  z-index: 100;
+}
+.search_element{
+  text-decoration: none;
+  padding: .5rem 1rem;
+  cursor: pointer;
+  transition: .5s;
+  user-select: none;
+  position: relative;
+  z-index: 101;
+}
+.search_element:hover{
+  background: #eee;
+}
+.no_results {
+  padding: .5rem 1rem;
+  text-align: center;
+}
+
+.skeleton_item{
+  width: 90%;
+  margin: .2rem 0;
+}
+.skeleton_list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
