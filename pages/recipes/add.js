@@ -9,6 +9,7 @@ import {
   Skeleton,
   Alert,
   InputNumber,
+  Typography,
 } from "antd";
 import Api from "../../utils/api";
 import styles from "../../styles/recipes.module.css";
@@ -24,8 +25,10 @@ import SearchElement from "../../components/SearchElement";
 export default function add() {
   const router = useRouter();
   const searchRef = useRef();
-  const { JWT } = useAuth();
+  const nameRef = useRef();
   const [loading, setLoading] = useState(false);
+  const weightRef = useRef();
+  const { JWT } = useAuth();
   const [query, setQuery] = useState("");
   const [ingredientList, setIngredientList] = useState([]);
   const { data: ingredientsQueried, errorQuery } = useSWR(
@@ -34,7 +37,7 @@ export default function add() {
 
   const [error, setError] = useState("");
   //effects
-  
+
   //functions
   function search() {
     setQuery(searchRef.current.input.value);
@@ -44,13 +47,52 @@ export default function add() {
     searchRef.current.state.value = "";
     searchRef.current.input.value = "";
   }
-  function removeIngredient(indexToRemove){
-    setIngredientList(ingredientList.filter((item, index)=> {
-      return index !== indexToRemove;
-    }))
+  function removeIngredient(indexToRemove) {
+    setIngredientList(
+      ingredientList.filter((item, index) => {
+        return index !== indexToRemove;
+      })
+    );
   }
   function addIngredient(item) {
-    setIngredientList((prevState) => [...prevState, item]);
+    const newItem = { ...item, quantity: 0 };
+    setIngredientList((prevState) => [...prevState, newItem]);
+  }
+  async function saveRecipe() {
+    setLoading(true);
+    let name = nameRef.current.state.value;
+    let ingredients = ingredientList.map((item) => {
+      return {
+        quantity: item.quantity,
+        ingredientId: item._id,
+      };
+    });
+    let weight = weightRef.current.state.value;
+
+    const newRecipe = {
+      name,
+      ingredients,
+      weight,
+    };
+    try {
+      await Api.post("recipes", newRecipe, {
+        Authorization: `Bearer ${JWT}`,
+      });
+      router.push("/recipes");
+    } catch (err) {
+      setError(err);
+    }
+    setLoading(false);
+  }
+  function editQuantity(value, index) {
+    setIngredientList((prevVal) =>
+      prevVal.map((item, ind) => {
+        if (ind === index) {
+          item.quantity = value;
+        }
+        return item;
+      })
+    );
   }
   return (
     <ViewLayout title="Add" subTitle="Recipes">
@@ -62,7 +104,7 @@ export default function add() {
         <br></br>
         <Row gutter={[16, 16]}>
           <Col span={24}>
-            <Input placeholder="Name" />
+            <Input ref={nameRef} placeholder="Name" />
           </Col>
           <Col span={16} offset={4}>
             <div className={styles.search} tabIndex="20">
@@ -105,7 +147,9 @@ export default function add() {
                       />
                     ))}
                     {ingredientsQueried.data.length === 0 ? (
-                      <li className={styles.no_results}>no ingredients found</li>
+                      <li className={styles.no_results}>
+                        no ingredients found
+                      </li>
                     ) : (
                       ""
                     )}
@@ -116,8 +160,31 @@ export default function add() {
           <Col span={24}>Ingredient list</Col>
           <Col span={24}>
             {ingredientList.map((ingredient, index) => {
-              return <IngredientItem remove={()=>removeIngredient(index)}  name={ingredient.name} />
+              return (
+                <IngredientItem
+                  key={index}
+                  remove={() => removeIngredient(index)}
+                  name={ingredient.name}
+                  edit={(e) => {
+                    editQuantity(e, index);
+                  }}
+                />
+              );
             })}
+          </Col>
+          <Col span={24}>
+            <Typography.Text>Total weight </Typography.Text>
+            <InputNumber ref={weightRef} size="small" min={0}></InputNumber>
+          </Col>
+          <Col span={24}>
+            <Button
+              loading={loading}
+              type="primary"
+              size="large"
+              onClick={saveRecipe}
+            >
+              Save{" "}
+            </Button>
           </Col>
         </Row>
       </form>
