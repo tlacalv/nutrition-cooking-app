@@ -40,3 +40,46 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+.ingredient_list{
+
+}
+.ingredient_item{
+  display: flex;
+  justify-content: space-between;
+  padding: .3rem;
+  transition: .5s;
+  border-radius: .5rem;
+  align-items: center;
+}
+.ingredient_item:hover {
+  background-color: #eee;
+
+}
+.ingredient_input {
+  position: relative;
+  width: 4.5rem;
+
+}
+.ingredient_name {
+  text-overflow: '-';
+overflow: hidden;
+white-space: nowrap;
+max-width: 170px;
+display: inline-block;
+}
+.label_input{
+  font-size: .7em;
+  z-index: 7000;
+  top: -10px;
+  user-select: none;
+  background-color: white;
+  border-radius: .3rem;
+  display: inline-block;  
+  left: 5px;
+  position: absolute;
+}
+@media screen and (min-width: 740px) {
+  .ingredient_name {
+    max-width: 500px;
+  }
+}
