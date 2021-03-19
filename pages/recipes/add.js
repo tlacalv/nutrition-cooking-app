@@ -34,9 +34,7 @@ export default function add() {
 
   const [error, setError] = useState("");
   //effects
-  useEffect(() => {
-    console.log(ingredientList);
-  }, [ingredientList]);
+  
   //functions
   function search() {
     setQuery(searchRef.current.input.value);
@@ -45,6 +43,11 @@ export default function add() {
     setQuery("");
     searchRef.current.state.value = "";
     searchRef.current.input.value = "";
+  }
+  function removeIngredient(indexToRemove){
+    setIngredientList(ingredientList.filter((item, index)=> {
+      return index !== indexToRemove;
+    }))
   }
   function addIngredient(item) {
     setIngredientList((prevState) => [...prevState, item]);
@@ -102,7 +105,7 @@ export default function add() {
                       />
                     ))}
                     {ingredientsQueried.data.length === 0 ? (
-                      <li className={styles.no_results}>no recipes found</li>
+                      <li className={styles.no_results}>no ingredients found</li>
                     ) : (
                       ""
                     )}
@@ -113,7 +116,7 @@ export default function add() {
           <Col span={24}>Ingredient list</Col>
           <Col span={24}>
             {ingredientList.map((ingredient, index) => {
-              return <IngredientItem name={ingredient.name} />
+              return <IngredientItem remove={()=>removeIngredient(index)}  name={ingredient.name} />
             })}
           </Col>
         </Row>
