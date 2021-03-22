@@ -16,7 +16,7 @@ export default function IngredientItem(props) {
       <Typography.Text className={styles.ingredient_name} strong>{props.name}</Typography.Text>
       <div className={styles.ingredient_input}>
         <Typography.Text className={styles.label_input}>Quantity</Typography.Text>
-        <InputNumber style={{width:'100%'}} size="small" min={0} onChange={props.edit} defaultValue={0}></InputNumber>
+        <InputNumber style={{width:'100%'}} size="small" min={0} onChange={props.edit} defaultValue={props.value}></InputNumber>
 
       </div>
     </div>

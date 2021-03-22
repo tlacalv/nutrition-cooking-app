@@ -165,6 +165,7 @@ export default function add() {
                   key={index}
                   remove={() => removeIngredient(index)}
                   name={ingredient.name}
+                  value={ingredient.quantity}
                   edit={(e) => {
                     editQuantity(e, index);
                   }}
