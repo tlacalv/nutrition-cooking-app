@@ -35,6 +35,9 @@ tr{
   transition: .5s;
   border-bottom: 1px solid #eee;
 }
+th{
+  padding: .7rem;
+}
 td {
   padding: .7rem;
 }

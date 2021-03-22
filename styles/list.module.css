@@ -2,6 +2,11 @@
   width: 250px;
   margin: .3rem 0;
 }
+
+.skeleton_td {
+  width: 100%;
+  margin: .1rem;
+}
 .list {
   row-gap: 1rem !important;
 }

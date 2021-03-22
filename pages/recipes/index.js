@@ -6,7 +6,7 @@ import useSWR from "swr";
 import { useState } from "react";
 import { Row, Button } from "antd";
 import styles from "../../styles/list.module.css";
-import IngredientCard from "../../components/IngredientCard";
+import RecipeCard from "../../components/RecipeCard";
 import SkeletonList from "../../components/SkeletonList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -41,7 +41,7 @@ export default function Recipes() {
           ) : (
             <>
               {recipes.data.map((item) => (
-                <IngredientCard key={item._id} ingredient={item} />
+                <RecipeCard key={item._id} recipe={item} />
               ))}
 
               <Button
@@ -60,7 +60,7 @@ export default function Recipes() {
         ) : (
           <>
             {recipesQueried.data.map((item) => (
-              <IngredientCard key={item._id} ingredient={item} />
+              <RecipeCard key={item._id} recipe={item} />
             ))}
 
             <Button
