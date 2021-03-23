@@ -2,7 +2,6 @@ import React from "react";
 import styles from "../styles/list.module.css";
 import { gold } from "@ant-design/colors";
 
-import {Skeleton} from 'antd'
 
 export default function RecipeTable(props) {
   return (
@@ -16,22 +15,9 @@ export default function RecipeTable(props) {
       <tbody>
         {props.ingredients.map((ingredientData) => {
           return (
-            <tr key={ingredientData.id}>
-              {ingredientData.data ? <>
-                <td>{ingredientData.data.data?.name}</td>
-                <td>{ingredientData?.quantity}</td>
-              
-              </>:
-
-              <>
-                <td>
-                  <Skeleton.Input active className={styles.skeleton_td} />
-                </td>
-                <td>
-                  <Skeleton.Input active className={styles.skeleton_td} />
-                </td>
-              </>
-              }
+            <tr key={ingredientData._id}>
+                <td>{ingredientData.name}</td>
+                <td>{ingredientData.quantity}</td>
             </tr>
           );
         })}

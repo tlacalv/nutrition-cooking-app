@@ -14,11 +14,7 @@ const { Title } = Typography;
 export default function RecipeCard(props) {
   const { JWT } = useAuth();
   const { recipe } = props;
-  const ingredients = recipe.ingredients.map(ingredient=>({
-    ...useSWR([`ingredients/${ingredient.ingredientId}`,JWT]),
-    quantity: ingredient.quantity,
-    id: ingredient.ingredientId
-  })) 
+  const { ingredients } = recipe
 
   //functions
   async function onDelete() {
@@ -38,11 +34,8 @@ export default function RecipeCard(props) {
   function onEdit() {}
   function caloriesPerPortion(ingredients, totalWeight, portionSize=100) {
     let totalCalories = 0;
-    ingredients.forEach(ingredientData => {
-      if (ingredientData.data) {
-        const {data:ingredient} = ingredientData.data;
-        totalCalories += (ingredient.calories/100) * ingredientData.quantity
-      }
+    ingredients.forEach(ingredient => {
+      totalCalories += (ingredient.calories/100) * ingredient.quantity
     });
     totalCalories /= totalWeight
     totalCalories *= portionSize
