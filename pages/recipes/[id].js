@@ -11,9 +11,11 @@ import {
   InputNumber,
   Typography,
 } from "antd";
+import { gold } from "@ant-design/colors";
 import Api from "../../utils/api";
 import styles from "../../styles/recipes.module.css";
 import { useAuth } from "../../contexts/AuthContext";
+import {caloriesPerPortion} from '../../functions'
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
@@ -24,6 +26,8 @@ import SearchElement from "../../components/SearchElement";
 export default function add() {
   const router = useRouter();
   const searchRef = useRef();
+  const portionRef = useRef();
+  const [portion, setPortion] = useState(100)
   const nameRef = useRef();
   const [name, setName] = useState('')
   const [loading, setLoading] = useState(false);
@@ -101,6 +105,18 @@ export default function add() {
         return item;
       })
     );
+  }
+  function changeWeight () {
+    if(isNaN(weightRef.current.input.value)) {
+      return
+    }
+    setWeight(weightRef.current.input.value)
+  }
+  function changePortion() {
+    if(isNaN(portionRef.current.input.value)){
+      return
+    }
+    setPortion(portionRef.current.input.value)
   }
   //render
   return (
@@ -184,7 +200,11 @@ export default function add() {
           </Col>
           <Col span={24}>
             <Typography.Text>Total weight </Typography.Text>
-            <InputNumber ref={weightRef} value={weight} onChange={()=>setWeight(weightRef.current.input.value)} size="small" min={0}></InputNumber>
+            <InputNumber ref={weightRef} value={weight} onChange={changeWeight} size="small" min={0}></InputNumber>
+          </Col>
+          <Col span={24}>
+            <InputNumber size="small" ref={portionRef} defaultValue={portion} onChange={changePortion} min={0}></InputNumber>
+            <Typography.Title level={3} style={{color:gold[5]}}> Calories per portion: {caloriesPerPortion(ingredientList, weight, portion)} </Typography.Title>
           </Col>
           <Col span={24}>
             <Button

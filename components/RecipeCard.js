@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { gold } from "@ant-design/colors";
 import RecipeTable from './RecipeTable'
-import styles from "../styles/list.module.css";
+import {caloriesPerPortion} from '../functions'
 import Api from "../utils/api";
 import Link from "next/link";
 import useSWR, { mutate } from "swr";
@@ -32,15 +32,7 @@ export default function RecipeCard(props) {
     }
   }
   function onEdit() {}
-  function caloriesPerPortion(ingredients, totalWeight, portionSize=100) {
-    let totalCalories = 0;
-    ingredients.forEach(ingredient => {
-      totalCalories += (ingredient.calories/100) * ingredient.quantity
-    });
-    totalCalories /= totalWeight
-    totalCalories *= portionSize
-    return Math.round(totalCalories);
-  }
+  
   return (
     <>
       <Col>
