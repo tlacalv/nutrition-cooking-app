@@ -1,7 +1,7 @@
 import ViewLayout from "../../components/ViewLayout";
 import Head from "next/head";
 import {
-  Form,
+  message,
   Row,
   Col,
   Input,
@@ -18,7 +18,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import {caloriesPerPortion} from '../../functions'
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import IngredientItem from "../../components/IngredientItem";
 import debounce from "lodash/debounce";
 import SearchElement from "../../components/SearchElement";
@@ -41,15 +41,19 @@ export default function add() {
   const { data: ingredientsQueried, errorQuery } = useSWR(
     !query ? false : [`ingredients/search/?queryString=${query}`, JWT]
   );
-  const { data: recipe, error: errorSWR } = useSWR(
-    !currentUser ? false : [`recipes/${router.query.id}`, JWT]
+  const { data: recipe, error: errorSWR, isValidating,  } = useSWR(
+    !currentUser ? false : [`recipes/${router.query.id}`, JWT],{
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false
+    }
   );
   //effects
   useEffect(() => {
+    if(isValidating) return
     setName(recipe ? recipe.data.name: '')
     setWeight(recipe ? recipe.data.weight: 0)
     setIngredientList(recipe ? recipe.data.ingredients : [])
-  },[recipe])
+  },[isValidating])
   //functions
   function search() {
     setQuery(searchRef.current.input.value);
@@ -72,14 +76,13 @@ export default function add() {
   }
   async function saveRecipe() {
     setLoading(true);
-    let name = nameRef.current.state.value;
+    setError("");
     let ingredients = ingredientList.map((item) => {
       return {
         quantity: item.quantity,
         ingredientId: item._id,
       };
     });
-    let weight = weightRef.current.state.value;
 
     const newRecipe = {
       name,
@@ -87,10 +90,11 @@ export default function add() {
       weight,
     };
     try {
-      await Api.post("recipes", newRecipe, {
+      await Api.put(`recipes/${router.query.id}`, newRecipe, {
         Authorization: `Bearer ${JWT}`,
       });
-      router.push("/recipes");
+      mutate(["recipes", JWT])
+      message.success("Recipe saved");
     } catch (err) {
       setError(err);
     }
@@ -129,7 +133,7 @@ export default function add() {
         <br></br>
         <Row gutter={[16, 16]}>
           <Col span={24}>
-            <Input ref={nameRef} loading placeholder="Name" value={name} onChange={()=>setName(nameRef.current.input.value)} />
+            <Input ref={nameRef} placeholder="Name" value={name} onChange={()=>setName(nameRef.current.input.value)} />
           </Col>
           <Col span={16} offset={4}>
             <div className={styles.search} tabIndex="20">
