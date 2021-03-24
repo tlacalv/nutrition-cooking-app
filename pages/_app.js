@@ -1,5 +1,5 @@
 import "fontsource-roboto";
-import "antd/dist/antd.css";
+import "../styles/custom-antd.css";
 import "../styles/index.css";
 import { AuthProvider } from "../contexts/AuthContext";
 import { PrivateRoute } from "../contexts/AuthContext";
