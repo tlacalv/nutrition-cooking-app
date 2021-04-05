@@ -1,6 +1,8 @@
 import "fontsource-roboto";
 import "../styles/custom-antd.css";
 import "../styles/index.css";
+import "../styles/index.scss";
+import "../node_modules/normalize.css/normalize.css";
 import { AuthProvider } from "../contexts/AuthContext";
 import { PrivateRoute } from "../contexts/AuthContext";
 import { UIProvider } from "../contexts/UIContext";

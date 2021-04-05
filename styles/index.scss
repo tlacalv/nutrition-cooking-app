@@ -1,0 +1,15 @@
+@use './sass/colors.scss';
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  padding: 1.3rem;
+  background-color: colors.$white;
+}
+::-moz-focus-inner {
+  border: 0;
+}
+.rg-24{
+  font-size: 18pt;
+  font-weight: 300;
+}

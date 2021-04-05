@@ -1,0 +1,30 @@
+@use '../variables.scss';
+@use '../colors.scss';
+
+.searchbar{
+  display: flex;
+  height: 66px;
+  align-items: center;
+  padding: 0 10px;
+  background-color: white;
+  border-radius: variables.$radius-1;
+  box-shadow: variables.$shadow;
+  input,
+  input:active,input:focus {
+    border: none;
+    outline: none;
+  }
+  input{
+    width: 100%;
+    transition: variables.$transition-duration;
+  }
+  input::placeholder {
+    color: colors.$gray-3;
+  }
+}
+.icon{
+  font-size: 1.8rem;
+  color: colors.$gray-2;
+  margin-left: 10px;
+  margin-right: 10px;
+}

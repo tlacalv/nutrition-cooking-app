@@ -1,21 +1,20 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { Button } from "antd";
 import { useUI } from "../contexts/UIContext";
+import styles from '../styles/sass/components/menubutton.module.scss';
 
 export default function MenuButton(props) {
   const { setShowMenu, showMenu } = useUI();
   return (
-    <Button
+    <button
+    className={styles.menu_button}
       {...props}
       onClick={() => setShowMenu(!showMenu)}
-      type="text"
-      icon={
-        <FontAwesomeIcon
+    >
+      <FontAwesomeIcon
           icon={faBars}
-          style={{ fontSize: 24, color: "#777" }}
+          className={styles.icon}
         />
-      }
-    />
+    </button>
   );
 }

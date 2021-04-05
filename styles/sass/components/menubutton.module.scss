@@ -1,0 +1,17 @@
+@use '../colors.scss';
+@use '../variables.scss';
+
+.menu_button {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+  transition: variables.$transition-duration;
+}
+.menu_button:focus{
+  outline: none;
+}
+.icon{
+  font-size: 2rem;
+  color: colors.$primary-3;
+}
