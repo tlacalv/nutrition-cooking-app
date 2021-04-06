@@ -1,58 +1,56 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { Layout as Antlayout, Menu, Drawer } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import MenuItem from "./MenuItem";
 import {
   faEgg,
   faUtensils,
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import styles from "../styles/layout.module.css";
+import styles from "../styles/sass/components/menu.module.scss";
 import { useUI } from "../contexts/UIContext";
-
-const { Sider } = Antlayout;
+import { classList } from "../functions/index";
 
 export default function MenuDrawer() {
   const { showMenu, setShowMenu } = useUI();
   const router = useRouter();
 
-  const toggle = () => {
-    setShowMenu(!showMenu);
-  };
+  const menuClasses = classList({
+    [styles.menu]: true,
+    [styles.show]: showMenu,
+  });
+  const overlayClasses = classList({
+    [styles.overlay]: true,
+    [styles.on]: showMenu,
+  });
 
   return (
-    <Drawer
-      title="Basic Drawer"
-      placement="left"
-      closable={false}
-      onClose={toggle}
-      headerStyle={{ display: "none" }}
-      visible={showMenu}
-      style={{ position: "absolute" }}
-      bodyStyle={{ padding: 0 }}
-    >
-      <Sider className={styles.sider}>
-        <div className={styles.logo}></div>
-        <Menu mode="inline" selectedKeys={[router.pathname]}>
-          <Menu.Item
-            key="/recipes"
+    <>
+      <div className={menuClasses}>
+        <div className={styles.logo}>
+          <img src="/logo.svg"></img>
+        </div>
+        <ul className={styles.menu_nav}>
+          <MenuItem
+            link="/recipes"
+            name="Recipes"
+            active={router.pathname === "/recipes"}
             icon={<FontAwesomeIcon icon={faUtensils} />}
-          >
-            <Link href="/recipes">Recipes</Link>
-          </Menu.Item>
-          <Menu.Item key="/ingredients" icon={<FontAwesomeIcon icon={faEgg} />}>
-            <Link href="/ingredients">
-              <a>Ingredients</a>
-            </Link>
-          </Menu.Item>
-          <Menu.Item
-            key="/about"
+          />
+          <MenuItem
+            link="/ingredients"
+            name="Ingredients"
+            active={router.pathname === "/ingredients"}
+            icon={<FontAwesomeIcon icon={faEgg} />}
+          />
+          <MenuItem
+            link="/about"
+            active={router.pathname === "/about"}
+            name="About"
             icon={<FontAwesomeIcon icon={faInfoCircle} />}
-          >
-            <Link href="/about">About</Link>
-          </Menu.Item>
-        </Menu>
-      </Sider>
-    </Drawer>
+          />
+        </ul>
+      </div>
+      <div onClick={() => setShowMenu(false)} className={overlayClasses}></div>
+    </>
   );
 }

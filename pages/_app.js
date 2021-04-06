@@ -1,4 +1,5 @@
 import "fontsource-roboto";
+import "fontsource-roboto/500.css";
 import "../styles/custom-antd.css";
 import "../styles/index.css";
 import "../styles/index.scss";

@@ -6,7 +6,6 @@ import SearchBar from "./SearchBar";
 import MenuButton from "./MenuButton";
 import { useUI } from "../contexts/UIContext";
 
-
 export default function Layout({ children }) {
   const { setShowMenu } = useUI();
 
@@ -25,9 +24,7 @@ export default function Layout({ children }) {
       </Head>
       <MenuDrawer />
       <div className={styles.site_layout}>
-        <header>
-          {SearchComponent ? SearchComponent : <MenuButton />}
-        </header>
+        <header>{SearchComponent ? SearchComponent : <MenuButton />}</header>
         <div
           style={{
             margin: "24px 16px",
