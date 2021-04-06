@@ -23,16 +23,14 @@ export default function Layout({ children }) {
         />
       </Head>
       <MenuDrawer />
-      <div className={styles.site_layout}>
-        <header>{SearchComponent ? SearchComponent : <MenuButton />}</header>
-        <div
-          style={{
-            margin: "24px 16px",
-            minHeight: "100vh",
-          }}
-        >
-          {newChildren}
-        </div>
+      <header>{SearchComponent ? SearchComponent : <MenuButton />}</header>
+      <div
+        style={{
+          margin: "24px 16px",
+          minHeight: "100vh",
+        }}
+      >
+        {newChildren}
       </div>
     </div>
   );

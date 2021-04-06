@@ -1,0 +1,25 @@
+@use '../variables.scss';
+@use '../colors.scss';
+
+.header{
+  display: flex;
+  height: 66px;
+  align-items: center;
+  gap: 10px;
+  padding: 0 10px;
+  background-color: white;
+  border-radius: variables.$radius-1;
+  box-shadow: variables.$shadow;
+}
+.icon{
+  font-size: 1.8rem;
+  color: colors.$gray-2;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.title{
+  color: colors.$gray-1 ;
+}
+.subtitle{
+  color: colors.$gray-3;
+}
