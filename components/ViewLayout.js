@@ -5,7 +5,7 @@ export default function ViewLayout(props) {
   return (
     <div className="layout">
       <header>
-        <HeaderView /> 
+        <HeaderView title={props.title} subtitle={props.subTitle} /> 
       </header>
       <div>
         {props.children}

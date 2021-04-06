@@ -10,13 +10,13 @@ const classesSubtitle = classList({
   'rg-20': true,
   [styles.subtitle]: true
 })
-export default function HeaderView() {
+export default function HeaderView(props) {
 
   return (
     <div className={styles.header}>
       <BackButton />
-      <h1 className={classesTitle}>Recipes</h1>
-      <h3 className={classesSubtitle}>Add</h3>
+      <h1 className={classesTitle}>{props.title}</h1>
+      <h3 className={classesSubtitle}>{props.subtitle}</h3>
     </div>
   )
 }
