@@ -5,11 +5,11 @@ import {
   Row,
   Col,
   Input,
-  Button,
   Alert,
   Typography,
   InputNumber,
 } from "antd";
+import Button from '../../components/Button';
 import styles from "../../styles/viewlayout.module.css";
 import Api from "../../utils/api";
 import { useAuth } from "../../contexts/AuthContext";
@@ -45,8 +45,8 @@ export default function add() {
       const response = await Api.post("ingredients", postData, {
         Authorization: `Bearer ${JWT}`,
       });
-      setLoading(false);
       router.push("/ingredients");
+      setLoading(false);
     } catch (error) {
       console.log(error)
       setError(error.message);
@@ -158,19 +158,16 @@ export default function add() {
             </Form.Item>
           </Col>
         </Row>
-        <Form.Item>
           <div className="flex flex-hc">
-            <Button
-              type="primary"
-              size="large"
-              htmlType="submit"
+          <Button
               loading={loading}
             >
               Save
             </Button>
           </div>
-        </Form.Item>
+        
       </Form>
+      
     </ViewLayout>
   );
 }

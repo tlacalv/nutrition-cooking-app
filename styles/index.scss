@@ -7,8 +7,8 @@
   background-color: colors.$white;
   min-height: 100vh;
 }
-::-moz-focus-inner {
-  border: 0;
+*:focus::-moz-focus-inner {
+  border: none;
 }
 .rg-24{
   font-size: 18pt;
@@ -29,4 +29,18 @@
 }
 h1,h2,h3,h4,h5,h6{
   margin: 0;
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple 600ms linear;
+  background-color: rgba($color: #fff, $alpha: .7);
+}
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
 }
