@@ -1,0 +1,64 @@
+@use '../colors.scss';
+@use '../variables.scss';
+
+
+.input_container {
+  height: 40px;
+  
+}
+
+.label{
+  position: absolute;
+  user-select: none;
+  top: 50%;
+  transition: variables.$transition-duration-fast;
+  margin-top: -.75rem;
+  left: 15px;
+  color: colors.$gray-1;
+}
+
+.input{
+  border: none;
+  height: 100%;
+  width: 100%;
+  padding-left: 15px;
+  background-color: transparent;
+  outline: none;
+  background-color: white;
+  border-radius: variables.$radius-1;
+  border: 1px solid colors.$primary-3;
+  &::placeholder{
+  transition: variables.$transition-duration;
+
+    color: colors.$gray-3;
+    opacity: 0;
+  }
+  &:focus + .label {
+    top: -1rem;
+    left: 5px;
+  margin-top: 0;
+  font-size: .626rem;
+  }
+  &:focus {
+    border-width: 2px;
+    &::placeholder{
+      opacity: 1;
+    }
+  }
+}
+
+.input_container{
+  position: relative;
+}
+
+.small {
+  height: 30px;
+  
+}
+.small_input{
+  font-size: 14px;
+}
+.small_label {
+  font-size: 14px;
+  margin-top: -.70rem;
+}
