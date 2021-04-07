@@ -54,7 +54,7 @@ export default function add() {
     }
   }
   return (
-    <ViewLayout title="Add" subTitle="Ingredients">
+    <ViewLayout title="Add" subTitle="Ingredients" loading={loading}>
       <Head>
         <title>Add Ingredients - Nutrition cooking</title>
       </Head>
