@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { Formik } from "formik";
 import Input from "../../components/Input";
-import * as Yup from 'yup';
+import {ingredientSchema} from '../../utils/schemas'
 
 export default function add() {
   const router = useRouter();
@@ -56,14 +56,7 @@ export default function add() {
           carbohydrate: "",
           protein: "",
         }}
-        validationSchema = {Yup.object({
-          name: Yup.string().required(),
-          portion: Yup.number().required().min(0),
-          calories: Yup.number().required().min(0),
-          fat: Yup.number().required().min(0),
-          carbohydrate: Yup.number().required().min(0),
-          protein: Yup.number().required().min(0)
-        })}
+        validationSchema = {ingredientSchema}
         onSubmit={onSubmit}
       >
         {(formik) => (
