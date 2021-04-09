@@ -1,11 +1,7 @@
 import styles from "../styles/sass/components/input.module.scss";
 import { classList } from "../functions";
-import {useState } from "react";
 
-export default function Input(props) {
-  const { small, label, placeholder, onchange } = props;
-  const [value, setValue] = useState(props.value);
-
+export default function Input({small, label, error, touched, ...props}) {
   const containerClasses = classList({
     [styles.input_container]: true,
     [styles.small]: small,
@@ -18,28 +14,24 @@ export default function Input(props) {
   const labelClasses = classList({
     "rg-16": true,
     [styles.label]: true,
-    [styles.label_active]: !!value,
+    [styles.label_active]: !!props.value,
     [styles.small_label] : small,
   });
-  const handleChange = (e)=> {
-    
-    setValue(e.target.value);
-    onchange?.(e);
+  const handleChange = (e, cb)=> {
+    cb?.(e)
   }
 
-
   return (
-    <div tabIndex="0" className={containerClasses}>
+    <div className={containerClasses}>
       <label>
         <input
-          type={props.type}
-          value={value}
-          onChange={(e)=>handleChange(e)}
+          {...props}
+          onChange={(e)=>handleChange(e, props.onChange)}
           className={inputClasses}
-          placeholder={placeholder}
         />
         <span className={labelClasses}>{label}</span>
       </label>
+      {error && touched ? (<div className={styles.error}>{error}</div>):null}
     </div>
   );
 }
