@@ -18,7 +18,6 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import IngredientItem from "../../components/IngredientItem";
-import { nonZero, positiveNumberVal } from "../../utils/validation";
 import debounce from "lodash/debounce";
 import SearchElement from "../../components/SearchElement";
 

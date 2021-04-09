@@ -16,6 +16,12 @@
   left: 15px;
   color: colors.$gray-1;
 }
+.label_active {
+  top: -1rem;
+    left: 5px;
+  margin-top: 0;
+  font-size: .626rem;
+}
 
 .input{
   border: none;
@@ -33,7 +39,7 @@
     color: colors.$gray-3;
     opacity: 0;
   }
-  &:focus + .label {
+  &:focus + .label, &:invalid + .label {
     top: -1rem;
     left: 5px;
   margin-top: 0;
