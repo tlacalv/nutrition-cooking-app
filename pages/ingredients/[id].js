@@ -1,15 +1,5 @@
 import ViewLayout from "../../components/ViewLayout";
 import Head from "next/head";
-import {
-  Form,
-  Row,
-  Col,
-  Input,
-  Button,
-  Alert,
-  Typography,
-  InputNumber,
-} from "antd";
 import SkeletonForm from "../../components/SkeletonForm";
 import styles from "../../styles/viewlayout.module.css";
 import Api from "../../utils/api";
@@ -17,6 +7,10 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { nonZero, positiveNumberVal } from "../../utils/validation";
+import { ingredientSchema } from "../../utils/schemas";
+import Input from "../../components/Input";
+import { Formik } from "formik";
+import Button from "../../components/Button";
 import useSWR from "swr";
 
 export default function Ingredient() {
@@ -25,16 +19,16 @@ export default function Ingredient() {
   const { data: response, error: errorSWR } = useSWR(
     !currentUser ? false : [`ingredients/${router.query.id}`, JWT]
   );
-  
+
   const [loading, setLoading] = useState(false);
 
   const [error, setError] = useState("");
-  async function onFinish({
+  async function onSubmit({
     name,
     portion,
     calories: portionCal,
     fat: portionFat,
-    carbohydrates: portionCarb,
+    carbohydrate: portionCarb,
     protein: portionProt,
   }) {
     setError("");
@@ -45,10 +39,15 @@ export default function Ingredient() {
     const carbohydrate = (portionCarb / portion) * 100;
     const protein = (portionProt / portion) * 100;
     postData = { ...postData, calories, fat, carbohydrate, protein };
+    console.log(postData)
     try {
-      const response = await Api.put(`ingredients/${router.query.id}`, postData, {
-        Authorization: `Bearer ${JWT}`,
-      });
+      const response = await Api.put(
+        `ingredients/${router.query.id}`,
+        postData,
+        {
+          Authorization: `Bearer ${JWT}`,
+        }
+      );
       setLoading(false);
       router.push("/ingredients");
     } catch (error) {
@@ -67,132 +66,83 @@ export default function Ingredient() {
         <SkeletonForm />
       ) : (
         <>
-          <Form
-            onFinish={onFinish}
+          <Formik
             initialValues={{
-              name: response?.data.name,
+              name: response.data.name,
               portion: 100,
               calories: response.data.calories,
               fat: response.data.fat,
-              carbohydrates: response.data.carbohydrate,
-              protein: response.data.protein
+              carbohydrate: response.data.carbohydrate,
+              protein: response.data.protein,
             }}
+            validationSchema={ingredientSchema}
+            onSubmit={onSubmit}
           >
-            {error && <Alert message={error} type="error" showIcon />}
-            <br></br>
-            <Form.Item
-              name="name"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input a name",
-                },
-              ]}
-            >
-              <Input placeholder="Name" />
-            </Form.Item>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="portion"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Portion size is needed",
-                    },
-                    positiveNumberVal,
-                    nonZero,
-                  ]}
-                >
-                  <InputNumber
-                    className={styles.int_input}
-                    placeholder="Portion size in gr"
+            {(formik) => (
+              <form className="regular_form" onSubmit={formik.handleSubmit}>
+                {error && <div className="error_box">{error}</div>}
+                <div className="form_group">
+                  <Input
+                    id="name"
+                    name="name"
+                    {...formik.getFieldProps("name")}
+                    label="Name"
+                    error={formik.errors.name}
+                    touched={formik.touched.name}
+                    placeholder="Ingredient name"
                   />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  rules={[
-                    {
-                      required: true,
-                      message: "Calorie count is needed",
-                    },
-                    positiveNumberVal,
-                  ]}
-                  name="calories"
-                >
-                  <InputNumber
-                    className={styles.int_input}
-                    placeholder="Calories"
+                  <Input
+                    id="portion"
+                    name="portion"
+                    {...formik.getFieldProps("portion")}
+                    label="Portion"
+                    error={formik.errors.portion}
+                    touched={formik.touched.portion}
+                    placeholder="Portion size"
                   />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="fat"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Fat content is needed",
-                    },
-                    positiveNumberVal,
-                  ]}
-                >
-                  <InputNumber className={styles.int_input} placeholder="Fat" />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  name="carbohydrates"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Carbohydrate content is needed",
-                    },
-                    positiveNumberVal,
-                  ]}
-                >
-                  <InputNumber
-                    className={styles.int_input}
-                    placeholder="Carbohydrates"
+                  <Input
+                    id="calories"
+                    name="calories"
+                    {...formik.getFieldProps("calories")}
+                    label="Calories"
+                    error={formik.errors.calories}
+                    touched={formik.touched.calories}
+                    placeholder="Calories per portion"
                   />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="protein"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Protein content is needed",
-                    },
-                    positiveNumberVal,
-                  ]}
-                >
-                  <InputNumber
-                    className={styles.int_input}
-                    placeholder="Protein"
+                  <Input
+                    id="fat"
+                    name="fat"
+                    {...formik.getFieldProps("fat")}
+                    label="Fats"
+                    error={formik.errors.fat}
+                    touched={formik.touched.fat}
+                    placeholder="Fats per portion"
                   />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Form.Item>
-              <div className="flex flex-hc">
-                <Button
-                  type="primary"
-                  size="large"
-                  htmlType="submit"
-                  loading={loading}
-                >
-                  Save
-                </Button>
-              </div>
-            </Form.Item>
-          </Form>
+                  <Input
+                    id="carbohydrate"
+                    name="carbohydrate"
+                    {...formik.getFieldProps("carbohydrate")}
+                    label="Carbohydrates"
+                    error={formik.errors.carbohydrate}
+                    touched={formik.touched.carbohydrate}
+                    placeholder="Carbohydrates per portion"
+                  />
+                  <Input
+                    id="protein"
+                    name="protein"
+                    {...formik.getFieldProps("protein")}
+                    label="Proteins"
+                    error={formik.errors.protein}
+                    touched={formik.touched.protein}
+                    placeholder="Proteins per portion"
+                  />
+                </div>
+                <div className="flex flex-hc">
+                  <Button loading={loading}>Save</Button>
+                </div>
+              </form>
+            )}
+          </Formik>
         </>
       )}
     </ViewLayout>
