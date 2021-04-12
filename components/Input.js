@@ -28,8 +28,8 @@ export default function Input({
     if (type === "number") {
       let value = e.target.value;
       if (isNaN(value)) return;
+      if (e.target.value) e.target.value = parseInt(e.target.value, 10);
     }
-    if (e.target.value) e.target.value = parseInt(e.target.value, 10);
     cb?.(e);
   };
 
