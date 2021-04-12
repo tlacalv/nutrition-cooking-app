@@ -21,8 +21,8 @@ export default function Input({
   const labelClasses = classList({
     "rg-16": true,
     [styles.label]: true,
-    [styles.label_active]: !!props.value,
     [styles.small_label]: small,
+    [styles.label_active]: (props.value !== ''),
   });
   const handleChange = (e, cb) => {
     if (type === "number") {

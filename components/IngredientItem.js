@@ -1,22 +1,24 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { Button, Typography, InputNumber } from "antd";
-import styles from '../styles/recipes.module.css';
+import Input from './Input'
+import styles from '../styles/sass/components/ingredientitem.module.scss';
 
 export default function IngredientItem(props) {
   return (
     <div className={styles.ingredient_item}>
-      <Button
-        shape="circle"
-        onClick={props.remove}
-        type="text"
-        icon={<FontAwesomeIcon icon={faTimes} />}
-      />
-      <Typography.Text className={styles.ingredient_name} strong>{props.name}</Typography.Text>
+      <div className={styles.head}>
+        <button
+        className={styles.close}
+          onClick={props.remove}
+        >
+          <FontAwesomeIcon icon={faTimes} />
+        </button>
+        <p className={`${styles.ingredient_name} md-14`}>{props.name}</p>
+
+      </div>
       <div className={styles.ingredient_input}>
-        <Typography.Text className={styles.label_input}>Quantity</Typography.Text>
-        <InputNumber style={{width:'100%'}} size="small" min={0} onChange={props.edit} defaultValue={props.value}></InputNumber>
+        <Input  small type="number" label="Quantity" onChange={props.edit} value={props.value} />
 
       </div>
     </div>

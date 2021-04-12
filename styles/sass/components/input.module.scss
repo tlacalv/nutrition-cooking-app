@@ -16,12 +16,6 @@
   left: 15px;
   color: colors.$gray-1;
 }
-.label_active {
-  top: -1rem;
-    left: 5px;
-  margin-top: 0;
-  font-size: .626rem;
-}
 
 .input{
   border: none;
@@ -73,6 +67,13 @@
   font-size: 14px;
 }
 .small_label {
+  left: 7px;
   font-size: 14px;
   margin-top: -.70rem;
+}
+.label_active {
+  top: -1rem;
+    left: 5px;
+  margin-top: 0;
+  font-size: .626rem;
 }

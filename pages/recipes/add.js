@@ -1,16 +1,6 @@
 import ViewLayout from "../../components/ViewLayout";
 import Head from "next/head";
-import {
-  Form,
-  Row,
-  Col,
-  Input,
-  Button,
-  Skeleton,
-  Alert,
-  InputNumber,
-  Typography,
-} from "antd";
+import { Skeleton, Alert } from "antd";
 import Api from "../../utils/api";
 import styles from "../../styles/recipes.module.css";
 import { useAuth } from "../../contexts/AuthContext";
@@ -20,10 +10,12 @@ import useSWR from "swr";
 import IngredientItem from "../../components/IngredientItem";
 import debounce from "lodash/debounce";
 import SearchElement from "../../components/SearchElement";
+import Input from "../../components/Input";
+import Button from "../../components/Button";
+import { Formik } from "formik";
 
 export default function add() {
   const router = useRouter();
-  const searchRef = useRef();
   const nameRef = useRef();
   const [loading, setLoading] = useState(false);
   const weightRef = useRef();
@@ -38,13 +30,11 @@ export default function add() {
   //effects
 
   //functions
-  function search() {
-    setQuery(searchRef.current.input.value);
+  function search(e) {
+    setQuery(e.target.value);
   }
-  function blur() {
+  function blur(e) {
     setQuery("");
-    searchRef.current.state.value = "";
-    searchRef.current.input.value = "";
   }
   function removeIngredient(indexToRemove) {
     setIngredientList(
@@ -83,7 +73,8 @@ export default function add() {
     }
     setLoading(false);
   }
-  function editQuantity(value, index) {
+  function editQuantity(e, index) {
+    let value = e.target.value;
     setIngredientList((prevVal) =>
       prevVal.map((item, ind) => {
         if (ind === index) {
@@ -94,29 +85,36 @@ export default function add() {
     );
   }
   return (
-    <ViewLayout title="Add" subTitle="Recipes">
+    <ViewLayout title="Recipes" subTitle="Add">
       <Head>
         <title>Add Recipes - Nutrition cooking</title>
       </Head>
-      <form>
-        {error && <Alert message={error} type="error" showIcon />}
-        <br></br>
-        <Row gutter={[16, 16]}>
-          <Col span={24}>
-            <Input ref={nameRef} placeholder="Name" />
-          </Col>
-          <Col span={16} offset={4}>
+      <Formik
+        enableReinitialize
+        initialValues={{
+          name: "et",
+          ingredients: ingredientList,
+          weight: "",
+        }}
+      >
+        {(formik) => (
+          <form className="regular_form" onSubmit={formik.handleSubmit}>
+            {error && <div className="error_box">{error}</div>}
+            <br></br>
+            <div className="form_group">
+            <Input
+              {...formik.getFieldProps("name")}
+              label="Name"
+              placeholder="Name of recipe"
+            />
+            <Input
+              onBlur={debounce(blur, 500)}
+              value={query}
+              label="Search Ingredient"
+              onChange={search}
+              placeholder="Search for ingredient"
+            />
             <div className={styles.search} tabIndex="20">
-              <Input
-                type="search"
-                onBlur={debounce(blur, 500)}
-                size="small"
-                ref={searchRef}
-                allowClear
-                onChange={debounce(search, 500)}
-                placeholder="Search for ingredient"
-              />
-
               {query &&
                 (!ingredientsQueried ? (
                   <div className={styles.skeleton_list}>
@@ -155,9 +153,9 @@ export default function add() {
                   </ul>
                 ))}
             </div>
-          </Col>
-          <Col span={24}>Ingredient list</Col>
-          <Col span={24}>
+            </div>
+            <div className="form_group">
+            <p>Ingredient list</p>
             {ingredientList.map((ingredient, index) => {
               return (
                 <IngredientItem
@@ -171,23 +169,18 @@ export default function add() {
                 />
               );
             })}
-          </Col>
-          <Col span={24}>
-            <Typography.Text>Total weight </Typography.Text>
-            <InputNumber ref={weightRef} size="small" min={0}></InputNumber>
-          </Col>
-          <Col span={24}>
-            <Button
-              loading={loading}
-              type="primary"
-              size="large"
-              onClick={saveRecipe}
-            >
-              Save{" "}
-            </Button>
-          </Col>
-        </Row>
-      </form>
+            </div>
+            <Input
+              {...formik.getFieldProps("weight")}
+              label="Total weight"
+              type="number"
+              placeholder="Weight in grams"
+            ></Input>
+
+            <Button loading={loading}>Save</Button>
+          </form>
+        )}
+      </Formik>
     </ViewLayout>
   );
 }

@@ -1,5 +1,7 @@
 .search {
   position: relative;
+  background-color: white;
+  margin-top: -15px;
 }
 .list, .skeleton_list {
   padding: 0;
@@ -11,11 +13,11 @@
   overflow-x: hidden;
   max-height: 300px;
   position: absolute;
+  background-color: white;
   width: 100%;
   z-index: 100;
 }
 .search_element{
-  text-decoration: none;
   padding: .5rem 1rem;
   cursor: pointer;
   transition: .5s;

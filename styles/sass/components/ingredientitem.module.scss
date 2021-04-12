@@ -1,0 +1,65 @@
+@use '../colors.scss';
+@use '../variables.scss';
+
+.ingredient_item {
+  display: flex;
+  justify-content: space-between;
+  border-radius: variables.$radius-1;
+  border: 1px solid colors.$gray-4;
+  background-color: white;
+  height: 60px;
+  padding: 0 10px;
+  align-items: center;
+}
+.head {
+  display: flex;
+  align-items: center;
+}
+.ingredient_name {
+  text-overflow: "-";
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 150px;
+  display: inline-block;
+  margin: 0 0.3rem;
+}
+.ingredient_input {
+  position: relative;
+  width: 4.5rem;
+}
+.close {
+  outline: none;
+  border: none;
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: variables.$transition-duration;
+  cursor: pointer;
+  border-radius: 100%;
+  svg {
+    font-size: 1rem;
+    color: red;
+  }
+  &:hover {
+    background-color: colors.$primary-1;
+  }
+}
+
+@media screen and (min-width: 400px) {
+  .ingredient_name {
+    max-width: 220px;
+  }
+}
+@media screen and (min-width: 500px) {
+  .ingredient_name {
+    max-width: 290px;
+  }
+}
+@media screen and (min-width: 740px) {
+  .ingredient_name {
+    max-width: 500px;
+  }
+}
