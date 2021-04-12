@@ -7,10 +7,6 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { Formik } from "formik";
 import Input from "../../components/Input";
-<<<<<<< HEAD
-=======
-import * as Yup from 'yup';
->>>>>>> 7d17a9c0b74811355a47625ee40e1ab05626eb95
 import {ingredientSchema} from '../../utils/schemas'
 
 export default function add() {

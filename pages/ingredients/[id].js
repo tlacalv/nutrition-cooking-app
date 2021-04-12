@@ -39,7 +39,6 @@ export default function Ingredient() {
     const carbohydrate = (portionCarb / portion) * 100;
     const protein = (portionProt / portion) * 100;
     postData = { ...postData, calories, fat, carbohydrate, protein };
-    console.log(postData)
     try {
       const response = await Api.put(
         `ingredients/${router.query.id}`,
