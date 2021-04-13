@@ -1,10 +1,10 @@
 import ViewLayout from "../../components/ViewLayout";
 import Head from "next/head";
-import { Skeleton, Alert } from "antd";
+import { Skeleton } from "antd";
 import Api from "../../utils/api";
 import styles from "../../styles/recipes.module.css";
 import { useAuth } from "../../contexts/AuthContext";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import IngredientItem from "../../components/IngredientItem";
@@ -13,15 +13,16 @@ import SearchElement from "../../components/SearchElement";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { Formik } from "formik";
+import { validateRecipe } from "../../utils/validation";
 
 export default function add() {
   const router = useRouter();
-  const nameRef = useRef();
   const [loading, setLoading] = useState(false);
-  const weightRef = useRef();
   const { JWT } = useAuth();
   const [query, setQuery] = useState("");
   const [ingredientList, setIngredientList] = useState([]);
+  const [name, setName] = useState("");
+  const [weight, setWeight] = useState("");
   const { data: ingredientsQueried, errorQuery } = useSWR(
     !query ? false : [`ingredients/search/?queryString=${query}`, JWT]
   );
@@ -47,20 +48,18 @@ export default function add() {
     const newItem = { ...item, quantity: 0 };
     setIngredientList((prevState) => [...prevState, newItem]);
   }
-  async function saveRecipe() {
+  async function saveRecipe({ name, ingredients, weight }) {
     setLoading(true);
-    let name = nameRef.current.state.value;
-    let ingredients = ingredientList.map((item) => {
+    let formatedIngredients = ingredients.map((item) => {
       return {
         quantity: item.quantity,
         ingredientId: item._id,
       };
     });
-    let weight = weightRef.current.state.value;
 
     const newRecipe = {
       name,
-      ingredients,
+      ingredients: formatedIngredients,
       weight,
     };
     try {
@@ -84,17 +83,29 @@ export default function add() {
       })
     );
   }
+  function handleChange(e) {
+    if (e.target.name === "name") {
+      setName(e.target.value);
+      return;
+    }
+    if (e.target.name === "weight") {
+      setWeight(e.target.value);
+      return;
+    }
+  }
   return (
-    <ViewLayout title="Recipes" subTitle="Add">
+    <ViewLayout title="Recipes" subTitle="Add" l>
       <Head>
         <title>Add Recipes - Nutrition cooking</title>
       </Head>
       <Formik
         enableReinitialize
+        validate={validateRecipe}
+        onSubmit={saveRecipe}
         initialValues={{
-          name: "et",
+          name: name,
           ingredients: ingredientList,
-          weight: "",
+          weight: weight,
         }}
       >
         {(formik) => (
@@ -104,7 +115,10 @@ export default function add() {
             <div className="form_group">
               <Input
                 {...formik.getFieldProps("name")}
+                onChange={handleChange}
                 label="Name"
+                error={formik.errors.name}
+                touched={formik.touched.name}
                 placeholder="Name of recipe"
               />
               <Input
@@ -112,6 +126,8 @@ export default function add() {
                 value={query}
                 label="Search Ingredient"
                 onChange={search}
+                error={formik.errors.ingredients}
+                touched={formik.touched.ingredients}
                 placeholder="Search for ingredient"
               />
               <div className={styles.search} tabIndex="20">
@@ -156,7 +172,7 @@ export default function add() {
             </div>
             <div className="form_group">
               <p>Ingredient list</p>
-              {ingredientList.map((ingredient, index) => {
+              {formik.values.ingredients.map((ingredient, index) => {
                 return (
                   <IngredientItem
                     key={index}
@@ -173,6 +189,9 @@ export default function add() {
                 {...formik.getFieldProps("weight")}
                 label="Total weight"
                 type="number"
+                error={formik.errors.weight}
+                touched={formik.touched.weight}
+                onChange={handleChange}
                 placeholder="Weight in grams"
               ></Input>
             </div>

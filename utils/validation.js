@@ -14,8 +14,12 @@ const nonZero = () => ({
     return Promise.reject(new Error("Portion can't be 0"));
   },
 });
-
-export {
-  positiveNumberVal,
-  nonZero
-}
+const validateRecipe = (values) => {
+  const errors = {};
+  if (values.name === "") errors.name = "A name is required";
+  if (values.ingredients.length === 0)
+    errors.ingredients = "Add at least one ingredient";
+  if (values.weight === "") errors.weight = "Weight is required";
+  return errors;
+};
+export { positiveNumberVal, nonZero, validateRecipe };
