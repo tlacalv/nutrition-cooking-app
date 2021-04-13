@@ -102,81 +102,80 @@ export default function add() {
             {error && <div className="error_box">{error}</div>}
             <br></br>
             <div className="form_group">
-            <Input
-              {...formik.getFieldProps("name")}
-              label="Name"
-              placeholder="Name of recipe"
-            />
-            <Input
-              onBlur={debounce(blur, 500)}
-              value={query}
-              label="Search Ingredient"
-              onChange={search}
-              placeholder="Search for ingredient"
-            />
-            <div className={styles.search} tabIndex="20">
-              {query &&
-                (!ingredientsQueried ? (
-                  <div className={styles.skeleton_list}>
-                    <Skeleton.Input
-                      size="small"
-                      className={styles.skeleton_item}
-                      active
-                    />
-                    <Skeleton.Input
-                      size="small"
-                      className={styles.skeleton_item}
-                      active
-                    />
-                    <Skeleton.Input
-                      size="small"
-                      className={styles.skeleton_item}
-                      active
-                    />
-                  </div>
-                ) : (
-                  <ul className={styles.list}>
-                    {ingredientsQueried.data.map((item, index) => (
-                      <SearchElement
-                        key={index}
-                        name={item.name}
-                        onClick={() => addIngredient(item)}
+              <Input
+                {...formik.getFieldProps("name")}
+                label="Name"
+                placeholder="Name of recipe"
+              />
+              <Input
+                onBlur={debounce(blur, 500)}
+                value={query}
+                label="Search Ingredient"
+                onChange={search}
+                placeholder="Search for ingredient"
+              />
+              <div className={styles.search} tabIndex="20">
+                {query &&
+                  (!ingredientsQueried ? (
+                    <div className={styles.skeleton_list}>
+                      <Skeleton.Input
+                        size="small"
+                        className={styles.skeleton_item}
+                        active
                       />
-                    ))}
-                    {ingredientsQueried.data.length === 0 ? (
-                      <li className={styles.no_results}>
-                        no ingredients found
-                      </li>
-                    ) : (
-                      ""
-                    )}
-                  </ul>
-                ))}
-            </div>
+                      <Skeleton.Input
+                        size="small"
+                        className={styles.skeleton_item}
+                        active
+                      />
+                      <Skeleton.Input
+                        size="small"
+                        className={styles.skeleton_item}
+                        active
+                      />
+                    </div>
+                  ) : (
+                    <ul className={styles.list}>
+                      {ingredientsQueried.data.map((item, index) => (
+                        <SearchElement
+                          key={index}
+                          name={item.name}
+                          onClick={() => addIngredient(item)}
+                        />
+                      ))}
+                      {ingredientsQueried.data.length === 0 ? (
+                        <li className={styles.no_results}>
+                          no ingredients found
+                        </li>
+                      ) : (
+                        ""
+                      )}
+                    </ul>
+                  ))}
+              </div>
             </div>
             <div className="form_group">
-            <p>Ingredient list</p>
-            {ingredientList.map((ingredient, index) => {
-              return (
-                <IngredientItem
-                  key={index}
-                  remove={() => removeIngredient(index)}
-                  name={ingredient.name}
-                  value={ingredient.quantity}
-                  edit={(e) => {
-                    editQuantity(e, index);
-                  }}
-                />
-              );
-            })}
+              <p>Ingredient list</p>
+              {ingredientList.map((ingredient, index) => {
+                return (
+                  <IngredientItem
+                    key={index}
+                    remove={() => removeIngredient(index)}
+                    name={ingredient.name}
+                    value={ingredient.quantity}
+                    edit={(e) => {
+                      editQuantity(e, index);
+                    }}
+                  />
+                );
+              })}
+              <Input
+                {...formik.getFieldProps("weight")}
+                label="Total weight"
+                type="number"
+                placeholder="Weight in grams"
+              ></Input>
             </div>
-            <Input
-              {...formik.getFieldProps("weight")}
-              label="Total weight"
-              type="number"
-              placeholder="Weight in grams"
-            ></Input>
-
             <Button loading={loading}>Save</Button>
           </form>
         )}
