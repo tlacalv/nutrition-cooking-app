@@ -10,13 +10,7 @@
 .list {
   row-gap: 1rem !important;
 }
-.addBtn {
-  width: 4.5rem;
-  height: 4.5rem;
-  position: fixed;
-  bottom: calc(100vh/20);
-  right: calc(100vw/20);
-}
+
 .addBtn svg {
  font-size: 2rem;
 

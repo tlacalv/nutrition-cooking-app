@@ -1,0 +1,52 @@
+@use '../colors.scss';
+@use '../variables.scss';
+@use 'sass:color';
+.btn{
+  outline: none;
+  transition-duration: variables.$transition-duration;
+  border: none;
+  height: 70px;
+  width: 70px;
+  font-size: 20px;
+  font-weight: 500;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 1px 1px 4px rgba($color: #000000, $alpha: .25);
+  border-radius: 100px;
+  color: colors.$gray-1;
+  font-size: 40px;
+  border: 3px solid colors.$gray-1;
+  &:focus{
+    outline: none;
+  }
+  &::after{
+    content: '';
+  height: 70px;
+  width: 70px;
+  background: white ;
+  transition: variables.$transition-duration;
+  opacity: 0;
+  position: absolute;
+  }
+  &:hover::after{
+  opacity: .2;
+
+  }
+}
+.btn:focus::-moz-focus-inner {
+  border: none;
+}
+.primary {
+  background: colors.$primary-gradient;
+
+  &:hover{
+    background-color: color.adjust(colors.$primary-3, $lightness: +6%)
+  }
+}
+.disabled {
+  cursor: progress;
+}
