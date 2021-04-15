@@ -7,6 +7,7 @@ export default function Input({
   error,
   touched,
   type,
+  whiteLabel,
   ...props
 }) {
   const containerClasses = classList({
@@ -23,6 +24,7 @@ export default function Input({
     [styles.label]: true,
     [styles.small_label]: small,
     [styles.label_active]: (props.value !== ''),
+    [styles.white]: whiteLabel
   });
   const handleChange = (e, cb) => {
     if (type === "number") {
