@@ -28,7 +28,7 @@ export default function Button(props) {
   }
   return (
     <>
-    <button disabled={loading} onClick={(e)=>{createRipple(e);props.onClick?.()}} className={classes}>
+    <button disabled={loading} onClick={(e)=>{createRipple(e);props.onClick?.()}} type={props.type?props.type:'submit'} className={classes}>
       {props.children}
     </button>
     </>
