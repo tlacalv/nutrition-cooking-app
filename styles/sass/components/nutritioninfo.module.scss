@@ -1,0 +1,41 @@
+@use '../colors.scss';
+
+.bubble {
+  background-color: white;
+  max-width: 70px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1.3rem 0.2rem;
+  border-radius: 100px;
+}
+.quantity {
+  background-color: colors.$primary-3;
+  color: colors.$gray-1;
+  width: 60px;
+  min-height: 37px;
+  display: flex;
+  border-radius: 100px;
+  justify-content: center;
+  align-items: center;
+}
+.unit {
+  color: colors.$gray-1;
+}
+.unit_name {
+  color: colors.$gray-2;
+}
+.accent {
+  background-color: colors.$accent-3;
+  color: white;
+}
+.info {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  margin: 1rem 0;
+  margin-top: 2rem;
+}
+
