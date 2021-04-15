@@ -9,6 +9,7 @@ export default function IngredientItem(props) {
     <div className={styles.ingredient_item}>
       <div className={styles.head}>
         <button
+        type="button"
         className={styles.close}
           onClick={props.remove}
         >
