@@ -8,13 +8,14 @@
 }
 
 .label{
+  --label-color: #{colors.$gray-1};
   position: absolute;
   user-select: none;
   top: 50%;
   transition: variables.$transition-duration-fast;
   margin-top: -.75rem;
   left: 15px;
-  color: colors.$gray-1;
+  color: var(--label-color);
 }
 
 .input{
@@ -38,6 +39,9 @@
     left: 5px;
   margin-top: 0;
   font-size: .626rem;
+  }
+  &:focus + .white{
+    --label-color: white;
   }
   &:focus {
     border-width: 2px;
@@ -76,4 +80,7 @@
     left: 5px;
   margin-top: 0;
   font-size: .626rem;
+}
+.white.label_active {
+  --label-color: white;
 }
