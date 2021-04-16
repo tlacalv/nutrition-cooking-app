@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
 import debounce from "lodash/debounce";
+import ButtonAdd from '../../components/ButtonAdd';
 
 export default function Ingredients() {
   const router = useRouter();
@@ -44,15 +45,15 @@ export default function Ingredients() {
                 <IngredientCard key={item._id} ingredient={item} />
               ))}
 
-              <Button
-                type="primary"
-                className={styles.addBtn}
-                icon={<FontAwesomeIcon icon={faPlus} />}
-                shape="circle"
+              <ButtonAdd
+                type="button"
+                className="addBtn"
                 onClick={() => {
-                  router.push("/ingredients/add");
+                  router.push("/recipes/add");
                 }}
-              ></Button>
+              >
+                <FontAwesomeIcon icon={faPlus} />
+              </ButtonAdd>
             </>
           )
         ) : !(ingredientsQueried || errorQuery) ? (
@@ -63,15 +64,15 @@ export default function Ingredients() {
               <IngredientCard key={item._id} ingredient={item} />
             ))}
 
-            <Button
-              type="primary"
-              className={styles.addBtn}
-              icon={<FontAwesomeIcon icon={faPlus} />}
-              shape="circle"
+            <ButtonAdd
+              type="button"
+              className="addBtn"
               onClick={() => {
-                router.push("/ingredients/add");
+                router.push("/recipes/add");
               }}
-            ></Button>
+            >
+              <FontAwesomeIcon icon={faPlus} />
+            </ButtonAdd>
           </>
         )}
       </Row>
