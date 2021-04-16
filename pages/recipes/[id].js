@@ -130,7 +130,7 @@ export default function Recipe() {
   return (
     <RecipeLayout title="Recipes" subTitle="Edit" loading={loading}>
       <Head>
-        <title>Add Recipes - Nutrition cooking</title>
+        <title>Edit Recipes - Nutrition cooking</title>
       </Head>
       <section className={styles.header_section}>
         <h1 className={`${styles.title} md-26`}>{name}</h1>
@@ -159,14 +159,17 @@ export default function Recipe() {
             placeholder="gm"
           />
         </div>
-        {(weight && ingredientList) ? (
-          <NutritionInformation
-            portion={portion}
-            ingredients={ingredientList}
-            weight={weight}
-          />
+        <div className={styles.nutrition_info}> 
+          {(weight && ingredientList) ? (
+            <NutritionInformation
+              portion={portion}
+              ingredients={ingredientList}
+              weight={weight}
+              type="recipe"
+            />
 
-        ):null}
+          ):null}
+        </div>
       </section>
       <form className="compact_form" onSubmit={formik.handleSubmit}>
         {error && <div className="error_box">{error}</div>}
