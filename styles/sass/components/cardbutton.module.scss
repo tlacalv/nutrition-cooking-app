@@ -1,0 +1,27 @@
+@use '../colors.scss';
+@use '../variables.scss';
+
+.card_button {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  border-radius: 100px;
+  height: 45px;
+  width: 45px;
+  font-size: 1.4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: variables.$transition-duration;
+}
+.card_button:hover {
+  background: rgba($color: #000000, $alpha: .2);
+}
+.card_button:focus{
+  outline: none;
+}
+.icon{
+  font-size: 2rem;
+  color: colors.$primary-3;
+}

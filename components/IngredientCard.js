@@ -1,14 +1,13 @@
-import { Col, Card, Row, Typography, message } from "antd";
+import { Card, message } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { gold } from "@ant-design/colors";
-import styles from "../styles/list.module.css";
+import styles from "../styles/sass/ingredient.module.scss";
 import Api from "../utils/api";
 import Link from "next/link";
 import useSWR, { mutate } from "swr";
 import { useAuth } from "../contexts/AuthContext";
-
-const { Title } = Typography;
+import NutritionInformation from "../components/NutritionInformation";
+import CardButton from "../components/CardButton";
 
 export default function IngredientCard(props) {
   const { JWT } = useAuth();
@@ -29,50 +28,26 @@ export default function IngredientCard(props) {
   }
   function onEdit() {}
   return (
-    <>
-      <Col>
-        <Card
-          title={<Title level={4}>{ingredient.name}</Title>}
-          headStyle={{ background: gold[3] }}
-          bodyStyle={{ padding: 0 }}
-          style={{ minWidth: 300 }}
-          actions={[
-            <Link href={`/ingredients/${ingredient._id}`}>
-              <FontAwesomeIcon style={{ width: "100%" }} icon={faEdit} />
-            </Link>,
-            <FontAwesomeIcon
-              style={{ width: "100%" }}
-              onClick={onDelete}
-              icon={faTrash}
-            />,
-          ]}
-        >
-          <Row>
-            <Col flex="auto">
-              <table className={styles.table}>
-                <tbody>
-                  <tr>
-                    <td>Calories</td>
-                    <td>{ingredient.calories}</td>
-                  </tr>
-                  <tr>
-                    <td>Carbohydrate</td>
-                    <td>{ingredient.carbohydrate}</td>
-                  </tr>
-                  <tr>
-                    <td>Fat</td>
-                    <td>{ingredient.fat}</td>
-                  </tr>
-                  <tr>
-                    <td>Protein</td>
-                    <td>{ingredient.protein}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </Col>
-          </Row>
-        </Card>
-      </Col>
-    </>
+    <div className={styles.card}>
+      <h2 className="md-26">{ingredient.name}</h2>
+      <div className={styles.info}>
+        <p>Portion size 100gr:</p>
+        <NutritionInformation
+          type="ingredient"
+          calories={ingredient.calories}
+          fat={ingredient.fat}
+          carbohydrate={ingredient.carbohydrate}
+          protein={ingredient.protein}
+        />
+      </div>
+      <div className={styles.footer}>
+        <CardButton>
+          <FontAwesomeIcon icon={faEdit} />
+        </CardButton>
+        <CardButton>
+          <FontAwesomeIcon icon={faTrash} />
+        </CardButton>
+      </div>
+    </div>
   );
 }

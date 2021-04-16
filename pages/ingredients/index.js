@@ -4,7 +4,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import SearchBar from "../../components/SearchBar";
 import useSWR from "swr";
 import { useState } from "react";
-import { Row, Button } from "antd";
+import { Row } from "antd";
 import styles from "../../styles/list.module.css";
 import IngredientCard from "../../components/IngredientCard";
 import SkeletonList from "../../components/SkeletonList";
@@ -49,7 +49,7 @@ export default function Ingredients() {
                 type="button"
                 className="addBtn"
                 onClick={() => {
-                  router.push("/recipes/add");
+                  router.push("/ingredients/add");
                 }}
               >
                 <FontAwesomeIcon icon={faPlus} />
@@ -68,7 +68,7 @@ export default function Ingredients() {
               type="button"
               className="addBtn"
               onClick={() => {
-                router.push("/recipes/add");
+                router.push("/ingredients/add");
               }}
             >
               <FontAwesomeIcon icon={faPlus} />

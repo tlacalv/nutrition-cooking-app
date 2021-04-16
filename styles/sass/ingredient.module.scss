@@ -1,0 +1,23 @@
+@use './colors.scss';
+@use './variables.scss';
+
+.info{
+  p{
+    margin-bottom: 0;
+    font-size: .8rem;
+  }
+  margin: 1rem 0;
+}
+.card {
+  h2{
+    color: colors.$gray-1;
+  }
+  background: colors.$primary-1;
+  color: colors.$gray-1;
+  padding: 1.3rem;
+  border-radius: variables.$radius-2;
+  border: 2px solid colors.$gray-4;
+}
+.footer {
+  display: flex;
+}
