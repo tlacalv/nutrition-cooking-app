@@ -1,5 +1,5 @@
-@use './colors.scss';
-@use './variables.scss';
+@use '../colors.scss';
+@use '../variables.scss';
 
 .info{
   p{
@@ -14,10 +14,21 @@
   }
   background: colors.$primary-1;
   color: colors.$gray-1;
+  max-width: 320px;
   padding: 1.3rem;
   border-radius: variables.$radius-2;
   border: 2px solid colors.$gray-4;
 }
 .footer {
   display: flex;
+}
+.ingredient_item{
+  color: colors.$gray-1;
+}
+.ingredient_item::marker{
+  color: colors.$accent-3;
+  font-size: 25px;
+}
+.ingredient_list {
+  padding-left: 1.2rem;
 }

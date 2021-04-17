@@ -1,8 +1,11 @@
+ @use 'sass:color';
+
  $white: #F5F5F2;
  
  $primary-3: #FFCC66;
  $primary-2: #FFF1D4;
  $primary-1: #FFF5E1;
+ $primary-4: color.adjust($primary-3, $lightness: -30%);
  
  $accent-3: #00B6A1;
  

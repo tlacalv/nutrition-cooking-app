@@ -1,7 +1,7 @@
 import { message } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
-import styles from "../styles/sass/ingredient.module.scss";
+import styles from "../styles/sass/components/card.module.scss";
 import Api from "../utils/api";
 import Link from "next/link";
 import useSWR, { mutate } from "swr";

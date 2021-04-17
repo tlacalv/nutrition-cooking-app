@@ -2,19 +2,22 @@ import { Col, Card, Row, Typography, message } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { gold } from "@ant-design/colors";
-import RecipeTable from './RecipeTable'
-import {caloriesPerPortion} from '../functions'
+import styles from "../styles/sass/components/card.module.scss";
+import RecipeList from "./RecipeList";
+import { caloriesPerPortion } from "../functions";
 import Api from "../utils/api";
 import Link from "next/link";
 import useSWR, { mutate } from "swr";
+import NutritionInformation from "../components/NutritionInformation";
 import { useAuth } from "../contexts/AuthContext";
+import CardButton from "../components/CardButton";
 
 const { Title } = Typography;
 
 export default function RecipeCard(props) {
   const { JWT } = useAuth();
   const { recipe } = props;
-  const { ingredients } = recipe
+  const { ingredients } = recipe;
 
   //functions
   async function onDelete() {
@@ -31,39 +34,32 @@ export default function RecipeCard(props) {
       console.log(error);
     }
   }
-  function onEdit() {}
-  
   return (
     <>
-      <Col>
-        <Card
-          title={<Title level={4}>{recipe.name}</Title>}
-          headStyle={{ background: gold[3] }}
-          bodyStyle={{ padding: 0 }}
-          style={{ minWidth: 300 }}
-          actions={[
+      <div className={styles.card}>
+        <h2 className="md-26">{recipe.name}</h2>
+        <div className={styles.ingredients}>
+          <RecipeList ingredients={ingredients} />
+        </div>
+        <div className={styles.info}>
+          <p>Portion size 100gr:</p>
+          <NutritionInformation
+            type="recipe"
+            ingredients={ingredients}
+            weight={recipe.weight}
+          />
+        </div>
+        <div className={styles.footer}>
+          <CardButton>
             <Link href={`/recipes/${recipe._id}`}>
-              <FontAwesomeIcon style={{ width: "100%" }} icon={faEdit} />
-            </Link>,
-            <FontAwesomeIcon
-              style={{ width: "100%" }}
-              onClick={onDelete}
-              icon={faTrash}
-            />,
-          ]}
-        >
-          <Row>
-            <Col flex="auto">
-              <RecipeTable ingredients={ingredients} />
-            </Col>
-          </Row>
-          <Row>
-            <Col offset={1}>
-              <Title level={5} style={{color:gold[5]}}>Calories per portion: {caloriesPerPortion(ingredients, recipe.weight)}</Title>
-            </Col>
-          </Row>
-        </Card>
-      </Col>
+              <FontAwesomeIcon icon={faEdit} />
+            </Link>
+          </CardButton>
+          <CardButton onClick={() => onDelete()}>
+            <FontAwesomeIcon icon={faTrash} />
+          </CardButton>
+        </div>
+      </div>
     </>
   );
 }
