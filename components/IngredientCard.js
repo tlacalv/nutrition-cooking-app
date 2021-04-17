@@ -1,4 +1,4 @@
-import { Card, message } from "antd";
+import { message } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import styles from "../styles/sass/ingredient.module.scss";
@@ -26,7 +26,6 @@ export default function IngredientCard(props) {
       console.log(error);
     }
   }
-  function onEdit() {}
   return (
     <div className={styles.card}>
       <h2 className="md-26">{ingredient.name}</h2>
@@ -42,9 +41,11 @@ export default function IngredientCard(props) {
       </div>
       <div className={styles.footer}>
         <CardButton>
-          <FontAwesomeIcon icon={faEdit} />
+          <Link href={`/ingredients/${ingredient._id}`}>
+            <FontAwesomeIcon icon={faEdit} />
+          </Link>
         </CardButton>
-        <CardButton>
+        <CardButton onClick={()=>onDelete()}>
           <FontAwesomeIcon icon={faTrash} />
         </CardButton>
       </div>
