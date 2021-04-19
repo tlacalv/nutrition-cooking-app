@@ -26,10 +26,10 @@ export default function add() {
     setError("");
     setLoading(true);
     let postData = { name };
-    const calories = (portionCal / portion) * 100;
-    const fat = (portionFat / portion) * 100;
-    const carbohydrate = (portionCarb / portion) * 100;
-    const protein = (portionProt / portion) * 100;
+    const calories = ((portionCal / portion) * 100).toFixed(2);
+    const fat = ((portionFat / portion) * 100).toFixed(2);
+    const carbohydrate = ((portionCarb / portion) * 100).toFixed(2);
+    const protein = ((portionProt / portion) * 100).toFixed(2);
     postData = { ...postData, calories, fat, carbohydrate, protein };
     try {
       const response = await Api.post("ingredients", postData, {
