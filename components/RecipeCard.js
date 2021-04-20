@@ -8,13 +8,14 @@ import { caloriesPerPortion } from "../functions";
 import Api from "../utils/api";
 import Link from "next/link";
 import useSWR, { mutate } from "swr";
+import React from 'react'
 import NutritionInformation from "../components/NutritionInformation";
 import { useAuth } from "../contexts/AuthContext";
 import CardButton from "../components/CardButton";
 
 const { Title } = Typography;
 
-export default function RecipeCard(props) {
+const RecipeCard = React.forwardRef((props, ref)  => {
   const { JWT } = useAuth();
   const { recipe } = props;
   const { ingredients } = recipe;
@@ -36,7 +37,7 @@ export default function RecipeCard(props) {
   }
   return (
     <>
-      <div className={styles.card}>
+      <div ref={ref} className={`${styles.card} card`}>
         <h2 className="md-26">{recipe.name}</h2>
         <div className={styles.ingredients}>
           <RecipeList ingredients={ingredients} />
@@ -62,4 +63,5 @@ export default function RecipeCard(props) {
       </div>
     </>
   );
-}
+});
+export default RecipeCard;
