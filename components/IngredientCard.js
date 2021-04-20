@@ -3,13 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import styles from "../styles/sass/components/card.module.scss";
 import Api from "../utils/api";
+import React from 'react'
 import Link from "next/link";
 import useSWR, { mutate } from "swr";
 import { useAuth } from "../contexts/AuthContext";
 import NutritionInformation from "../components/NutritionInformation";
 import CardButton from "../components/CardButton";
 
-export default function IngredientCard(props) {
+const IngredientCard = React.forwardRef((props, ref) => {
   const { JWT } = useAuth();
   const { ingredient } = props;
   async function onDelete() {
@@ -27,7 +28,7 @@ export default function IngredientCard(props) {
     }
   }
   return (
-    <div className={styles.card}>
+    <div ref={ref} className={styles.card}>
       <h2 className="md-26">{ingredient.name}</h2>
       <div className={styles.info}>
         <p>Portion size 100gr:</p>
@@ -51,4 +52,6 @@ export default function IngredientCard(props) {
       </div>
     </div>
   );
-}
+})
+
+export default IngredientCard;

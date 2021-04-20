@@ -3,18 +3,20 @@ import Head from "next/head";
 import { useAuth } from "../../contexts/AuthContext";
 import SearchBar from "../../components/SearchBar";
 import useSWR from "swr";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Row } from "antd";
 import styles from "../../styles/list.module.css";
 import IngredientCard from "../../components/IngredientCard";
 import SkeletonList from "../../components/SkeletonList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { useMasonry, onResize, MasonryItem } from "../../hooks/useMasonry";
 import { useRouter } from "next/router";
 import debounce from "lodash/debounce";
 import ButtonAdd from '../../components/ButtonAdd';
 
 export default function Ingredients() {
+  const { elRefs, setElRefs } = useMasonry();
   const router = useRouter();
   const { currentUser, JWT } = useAuth();
   const [query, setQuery] = useState("");
@@ -24,7 +26,13 @@ export default function Ingredients() {
   const { data: ingredientsQueried, errorQuery } = useSWR(
     !query ? false : [`ingredients/search/?queryString=${query}`, JWT]
   );
+  //Initialize refsArray
+  const arrLenght = ingredients?.data ? ingredients.data.length : 0;
+  setElRefs(arrLenght);
 
+  useEffect(() => {
+    onResize(elRefs);
+  }, [elRefs.current, ingredients, ingredientsQueried]);
   function search(e) {
     setQuery(e.target.value);
   }
@@ -35,14 +43,16 @@ export default function Ingredients() {
       </Head>
       <SearchBar search={debounce(search, 1000)} />
 
-      <Row gutter={8} className={styles.list} justify="center">
+      <div className="grid">
         {!query ? (
           !(ingredients || error) ? (
             <SkeletonList elements={20} />
           ) : (
             <>
-              {ingredients.data.map((item) => (
-                <IngredientCard key={item._id} ingredient={item} />
+              {ingredients.data.map((item,i) => (
+                <MasonryItem>
+                  <IngredientCard ref={elRefs.current[i]} key={item._id} ingredient={item} />
+                </MasonryItem>
               ))}
 
               <ButtonAdd
@@ -60,8 +70,10 @@ export default function Ingredients() {
           <SkeletonList elements={20} />
         ) : (
           <>
-            {ingredientsQueried.data.map((item) => (
-              <IngredientCard key={item._id} ingredient={item} />
+            {ingredientsQueried.data.map((item,i) => (
+              <MasonryItem>
+                <IngredientCard ref={elRefs.current[i]} key={item._id} ingredient={item} />
+              </MasonryItem>
             ))}
 
             <ButtonAdd
@@ -75,7 +87,7 @@ export default function Ingredients() {
             </ButtonAdd>
           </>
         )}
-      </Row>
+      </div>
     </Layout>
   );
 }

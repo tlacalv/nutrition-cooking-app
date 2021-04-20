@@ -94,6 +94,19 @@ h1,h2,h3,h4,h5,h6{
   bottom: calc(100vh/20);
   right: calc(100vw/20);
 }
+.grid {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(320px,320px));
+  align-items: center;
+  justify-content: center;
+  grid-auto-rows: 20px;
+}
+.item {
+  display: flex;
+  justify-content: center;
+}
+
 @keyframes ripple {
   to {
     transform: scale(4);
