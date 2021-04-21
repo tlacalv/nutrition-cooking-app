@@ -1,27 +1,27 @@
-import { Col, Card, Row, Typography, message } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { gold } from "@ant-design/colors";
 import styles from "../styles/sass/components/card.module.scss";
 import RecipeList from "./RecipeList";
-import { caloriesPerPortion } from "../functions";
 import Api from "../utils/api";
 import Link from "next/link";
 import useSWR, { mutate } from "swr";
-import React from 'react'
+import React, { useState } from 'react'
 import NutritionInformation from "../components/NutritionInformation";
 import { useAuth } from "../contexts/AuthContext";
+import Message from './Message';
 import CardButton from "../components/CardButton";
 
-const { Title } = Typography;
+
 
 const RecipeCard = React.forwardRef((props, ref)  => {
+  const [message, setMessage] = useState();
   const { JWT } = useAuth();
   const { recipe } = props;
   const { ingredients } = recipe;
 
   //functions
   async function onDelete() {
+    setMessage()
     try {
       await Api.delete(
         `recipes/${recipe._id}`,
@@ -29,7 +29,7 @@ const RecipeCard = React.forwardRef((props, ref)  => {
         { Authorization: `Bearer ${JWT}` }
       );
       mutate(["recipes", JWT]);
-      message.success("Element deleted");
+      setMessage("Element deleted");
     } catch (error) {
       message.error("Something went wrong while deleting");
       console.log(error);
@@ -38,6 +38,7 @@ const RecipeCard = React.forwardRef((props, ref)  => {
   return (
     <>
       <div ref={ref} className={`${styles.card} card`}>
+      { message && <Message success >{message}</Message>}
         <h2 className="md-26">{recipe.name}</h2>
         <div className={styles.ingredients}>
           <RecipeList ingredients={ingredients} />
