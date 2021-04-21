@@ -13,7 +13,14 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useMasonry, onResize, MasonryItem } from "../../hooks/useMasonry";
 import { useRouter } from "next/router";
 import debounce from "lodash/debounce";
-import ButtonAdd from '../../components/ButtonAdd';
+import ButtonAdd from "../../components/ButtonAdd";
+
+const itemsLenght = (ingredients, ingredientsQueried, query) => {
+  if (!query) {
+    return ingredients?.data ? ingredients.data.length : 0;
+  }
+  return ingredientsQueried?.data ? ingredientsQueried.data.length : 0;
+};
 
 export default function Ingredients() {
   const { elRefs, setElRefs } = useMasonry();
@@ -27,8 +34,7 @@ export default function Ingredients() {
     !query ? false : [`ingredients/search/?queryString=${query}`, JWT]
   );
   //Initialize refsArray
-  const arrLenght = ingredients?.data ? ingredients.data.length : 0;
-  setElRefs(arrLenght);
+  setElRefs(itemsLenght(ingredients, ingredientsQueried, query));
 
   useEffect(() => {
     onResize(elRefs);
@@ -49,9 +55,13 @@ export default function Ingredients() {
             <SkeletonList elements={20} />
           ) : (
             <>
-              {ingredients.data.map((item,i) => (
+              {ingredients.data.map((item, i) => (
                 <MasonryItem>
-                  <IngredientCard ref={elRefs.current[i]} key={item._id} ingredient={item} />
+                  <IngredientCard
+                    ref={elRefs.current[i]}
+                    key={item._id}
+                    ingredient={item}
+                  />
                 </MasonryItem>
               ))}
 
@@ -70,9 +80,13 @@ export default function Ingredients() {
           <SkeletonList elements={20} />
         ) : (
           <>
-            {ingredientsQueried.data.map((item,i) => (
+            {ingredientsQueried.data.map((item, i) => (
               <MasonryItem>
-                <IngredientCard ref={elRefs.current[i]} key={item._id} ingredient={item} />
+                <IngredientCard
+                  ref={elRefs.current[i]}
+                  key={item._id}
+                  ingredient={item}
+                />
               </MasonryItem>
             ))}
 

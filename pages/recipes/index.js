@@ -13,6 +13,12 @@ import debounce from "lodash/debounce";
 import { useMasonry, onResize, MasonryItem } from "../../hooks/useMasonry";
 import ButtonAdd from "../../components/ButtonAdd";
 
+const itemsLenght = (recipes, recipesQueried, query) => {
+  if (!query) {
+    return recipes?.data ? recipes.data.length : 0;
+  }
+  return recipesQueried?.data ? recipesQueried.data.length : 0;
+};
 export default function Recipes() {
   const router = useRouter();
   const { elRefs, setElRefs } = useMasonry();
@@ -25,8 +31,7 @@ export default function Recipes() {
     !query ? false : [`recipes/search/?queryString=${query}`, JWT]
   );
   //Initialize refsArray
-  const arrLenght = recipes?.data ? recipes.data.length : 0;
-  setElRefs(arrLenght);
+  setElRefs(itemsLenght(recipes, recipesQueried, query));
 
   useEffect(() => {
     onResize(elRefs);
