@@ -5,15 +5,13 @@ import RecipeList from "./RecipeList";
 import Api from "../utils/api";
 import Link from "next/link";
 import useSWR, { mutate } from "swr";
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import NutritionInformation from "../components/NutritionInformation";
 import { useAuth } from "../contexts/AuthContext";
-import Message from './Message';
+import Message from "./Message";
 import CardButton from "../components/CardButton";
 
-
-
-const RecipeCard = React.forwardRef((props, ref)  => {
+const RecipeCard = React.forwardRef((props, ref) => {
   const [message, setMessage] = useState();
   const { JWT } = useAuth();
   const { recipe } = props;
@@ -21,14 +19,19 @@ const RecipeCard = React.forwardRef((props, ref)  => {
 
   //functions
   async function onDelete() {
-    setMessage()
+    setMessage();
     try {
       await Api.delete(
         `recipes/${recipe._id}`,
         {},
         { Authorization: `Bearer ${JWT}` }
       );
-      mutate(["recipes", JWT]);
+      mutate(["recipes", JWT], async (data) => {
+        const newData = data.data.filter((item) => {
+          return !(item._id === recipe._id);
+        });
+        return { ...data, data: newData };
+      });
       setMessage("Element deleted");
     } catch (error) {
       message.error("Something went wrong while deleting");
@@ -38,7 +41,7 @@ const RecipeCard = React.forwardRef((props, ref)  => {
   return (
     <>
       <div ref={ref} className={`${styles.card} card`}>
-      { message && <Message success >{message}</Message>}
+        {message && <Message success>{message}</Message>}
         <h2 className="md-26">{recipe.name}</h2>
         <div className={styles.ingredients}>
           <RecipeList ingredients={ingredients} />
