@@ -1,12 +1,10 @@
 import ViewLayout from "../../components/ViewLayout";
 import Head from "next/head";
 import SkeletonForm from "../../components/SkeletonForm";
-import styles from "../../styles/viewlayout.module.css";
 import Api from "../../utils/api";
 import { useAuth } from "../../contexts/AuthContext";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { nonZero, positiveNumberVal } from "../../utils/validation";
 import { ingredientSchema } from "../../utils/schemas";
 import Input from "../../components/Input";
 import { Formik } from "formik";
@@ -62,7 +60,10 @@ export default function Ingredient() {
       </Head>
 
       {!response ? (
-        <SkeletonForm />
+        <div className="regular_form">
+          <SkeletonForm />
+
+        </div>
       ) : (
         <>
           <Formik
