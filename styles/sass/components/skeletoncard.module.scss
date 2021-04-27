@@ -1,0 +1,23 @@
+@use '../colors.scss';
+@use '../variables.scss';
+
+.card {
+  width: 320px;
+  border-radius: variables.$radius-2;
+  background: colors.$gray-4;
+  height: 295px;
+  padding: 1.3rem;
+}
+.information {
+  display: flex;
+  gap: .3rem;
+  justify-content: center;
+  span{
+    border-radius: 100px;
+  }
+  padding: 1.6rem 0;
+}
+.buttons {
+  display: flex;
+  gap: .6rem;
+}

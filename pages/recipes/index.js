@@ -47,38 +47,14 @@ export default function Recipes() {
       </Head>
       <SearchBar search={debounce(search, 1000)} />
 
-      <div className="grid">
-        {!query ? (
-          !(recipes || error) ? (
+      {!query ? (
+        !(recipes || error) ? (
+          <div className="flex">
             <SkeletonList elements={20} />
-          ) : (
-            <>
-              {recipes.data.map((item, i) => (
-                <MasonryItem>
-                  <RecipeCard
-                    ref={elRefs.current[i]}
-                    key={item._id}
-                    recipe={item}
-                  />
-                </MasonryItem>
-              ))}
-
-              <ButtonAdd
-                type="button"
-                className="addBtn"
-                onClick={() => {
-                  router.push("/recipes/add");
-                }}
-              >
-                <FontAwesomeIcon icon={faPlus} />
-              </ButtonAdd>
-            </>
-          )
-        ) : !(recipesQueried || errorQuery) ? (
-          <SkeletonList elements={20} />
+          </div>
         ) : (
-          <>
-            {recipesQueried.data.map((item, i) => (
+          <div className="grid">
+            {recipes.data.map((item, i) => (
               <MasonryItem>
                 <RecipeCard
                   ref={elRefs.current[i]}
@@ -97,9 +73,35 @@ export default function Recipes() {
             >
               <FontAwesomeIcon icon={faPlus} />
             </ButtonAdd>
-          </>
-        )}
-      </div>
+          </div>
+        )
+      ) : !(recipesQueried || errorQuery) ? (
+        <div className="flex">
+          <SkeletonList elements={20} />
+        </div>
+      ) : (
+        <div className="grid">
+          {recipesQueried.data.map((item, i) => (
+            <MasonryItem>
+              <RecipeCard
+                ref={elRefs.current[i]}
+                key={item._id}
+                recipe={item}
+              />
+            </MasonryItem>
+          ))}
+
+          <ButtonAdd
+            type="button"
+            className="addBtn"
+            onClick={() => {
+              router.push("/recipes/add");
+            }}
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </ButtonAdd>
+        </div>
+      )}
     </Layout>
   );
 }

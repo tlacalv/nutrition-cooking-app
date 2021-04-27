@@ -2,17 +2,18 @@
 
  $white: #F5F5F2;
  
- $primary-3: #FFCC66;
- $primary-2: #FFF1D4;
- $primary-1: #FFF5E1;
+ $primary-3: hsl(40, 100%, 70%);
+ $primary-2: hsl(40, 100%, 92%);
+ $primary-2-5: hsl(40, 40%, 80%);
+ $primary-1: hsl(40, 100%, 94%);
  $primary-4: color.adjust($primary-3, $lightness: -30%);
  
  $accent-3: #00B6A1;
  
- $gray-1: #273447;
- $gray-2: #525D6C;
- $gray-3: #A9AEB5;
- $gray-4: #D3D1C5;
+ $gray-1: hsl(216, 29%, 22%);
+ $gray-2: hsl(215, 14%, 37%);
+ $gray-3: hsl(215, 8%, 69%);
+ $gray-4: hsl(0, 0%, 85%);
 
  
  $secondary-3: #FE5A27;

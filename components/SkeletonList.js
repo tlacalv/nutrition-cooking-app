@@ -1,5 +1,5 @@
-import { Col, Card, Skeleton, Row } from "antd";
-import styles from "../styles/list.module.css";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import styles from "../styles/sass/components/skeletoncard.module.scss";
 
 export default function SkeletonList(props) {
   return (
@@ -8,48 +8,23 @@ export default function SkeletonList(props) {
         .fill()
         .map((item, index) => {
           return (
-            <Col key={index}>
-              <Card
-                title={<Skeleton.Input style={{ width: 100 }} active />}
-                style={{ width: 300 }}
-                bodyStyle={{ padding: 10 }}
-                actions={[
-                  <Skeleton.Button active size="small" shape="round" />,
-                  <Skeleton.Button active size="small" shape="round" />,
-                ]}
-              >
-                <Row type="flex" justify="center">
-                  <Col span={22}>
-                    <Skeleton.Input
-                      size="small"
-                      active
-                      className={styles.skeleton_row}
-                    />
-                  </Col>
-                  <Col>
-                    <Skeleton.Input
-                      size="small"
-                      active
-                      className={styles.skeleton_row}
-                    />
-                  </Col>
-                  <Col span={22}>
-                    <Skeleton.Input
-                      size="small"
-                      active
-                      className={styles.skeleton_row}
-                    />
-                  </Col>
-                  <Col>
-                    <Skeleton.Input
-                      size="small"
-                      active
-                      className={styles.skeleton_row}
-                    />
-                  </Col>
-                </Row>
-              </Card>
-            </Col>
+            <SkeletonTheme highlightColor="#d9d9d9">
+            <div className={styles.card}>
+              <h2 className="md-26">
+                <Skeleton duration={1} />
+              </h2>
+              <div className={styles.information}>
+                <Skeleton height={113} width={60} />
+                <Skeleton height={113} width={60} />
+                <Skeleton height={113} width={60} />
+                <Skeleton height={113} width={60} />
+              </div>
+              <div className={styles.buttons}>
+                <Skeleton circle height={40} width={40} />
+                <Skeleton circle height={40} width={40} />
+              </div>
+            </div>
+            </SkeletonTheme>
           );
         })}
     </>

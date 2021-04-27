@@ -4,8 +4,6 @@ import { useAuth } from "../../contexts/AuthContext";
 import SearchBar from "../../components/SearchBar";
 import useSWR from "swr";
 import { useState, useEffect } from "react";
-import { Row } from "antd";
-import styles from "../../styles/list.module.css";
 import IngredientCard from "../../components/IngredientCard";
 import SkeletonList from "../../components/SkeletonList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -48,39 +46,14 @@ export default function Ingredients() {
         <title>Ingredients - Nutrition cooking</title>
       </Head>
       <SearchBar search={debounce(search, 1000)} />
-
-      <div className="grid">
-        {!query ? (
-          !(ingredients || error) ? (
-            <SkeletonList elements={20} />
-          ) : (
-            <>
-              {ingredients.data.map((item, i) => (
-                <MasonryItem>
-                  <IngredientCard
-                    ref={elRefs.current[i]}
-                    key={item._id}
-                    ingredient={item}
-                  />
-                </MasonryItem>
-              ))}
-
-              <ButtonAdd
-                type="button"
-                className="addBtn"
-                onClick={() => {
-                  router.push("/ingredients/add");
-                }}
-              >
-                <FontAwesomeIcon icon={faPlus} />
-              </ButtonAdd>
-            </>
-          )
-        ) : !(ingredientsQueried || errorQuery) ? (
-          <SkeletonList elements={20} />
+      {!query ? (
+        !(ingredients || error) ? (
+          <div className="flex">
+            <SkeletonList elements={10} />
+          </div>
         ) : (
-          <>
-            {ingredientsQueried.data.map((item, i) => (
+          <div className="grid">
+            {ingredients.data.map((item, i) => (
               <MasonryItem>
                 <IngredientCard
                   ref={elRefs.current[i]}
@@ -99,9 +72,35 @@ export default function Ingredients() {
             >
               <FontAwesomeIcon icon={faPlus} />
             </ButtonAdd>
-          </>
-        )}
-      </div>
+          </div>
+        )
+      ) : !(ingredientsQueried || errorQuery) ? (
+        <div className="flex">
+          <SkeletonList elements={10} />
+        </div>
+      ) : (
+        <div className="grid">
+          {ingredientsQueried.data.map((item, i) => (
+            <MasonryItem>
+              <IngredientCard
+                ref={elRefs.current[i]}
+                key={item._id}
+                ingredient={item}
+              />
+            </MasonryItem>
+          ))}
+
+          <ButtonAdd
+            type="button"
+            className="addBtn"
+            onClick={() => {
+              router.push("/ingredients/add");
+            }}
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </ButtonAdd>
+        </div>
+      )}
     </Layout>
   );
 }
