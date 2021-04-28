@@ -1,8 +1,7 @@
 import RecipeLayout from "../../components/RecipeLayout";
 import Head from "next/head";
-import { Skeleton } from "antd";
+import Skeleton from 'react-loading-skeleton'
 import Api from "../../utils/api";
-// import styles from "../../styles/recipes.module.css";
 import styles from "../../styles/sass/recipe.module.scss";
 import { useAuth } from "../../contexts/AuthContext";
 import { useState, useEffect } from "react";
@@ -196,21 +195,9 @@ export default function Recipe() {
             {query &&
               (!ingredientsQueried ? (
                 <div className={styles.skeleton_list}>
-                  <Skeleton.Input
-                    size="small"
-                    className={styles.skeleton_item}
-                    active
-                  />
-                  <Skeleton.Input
-                    size="small"
-                    className={styles.skeleton_item}
-                    active
-                  />
-                  <Skeleton.Input
-                    size="small"
-                    className={styles.skeleton_item}
-                    active
-                  />
+                  <Skeleton height={30} />
+                  <Skeleton height={30} />
+                  <Skeleton height={30} />
                 </div>
               ) : (
                 <ul className={styles.list}>
