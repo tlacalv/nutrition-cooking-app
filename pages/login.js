@@ -1,109 +1,82 @@
-import { Row, Col, Typography, Form, Input, Button, Alert } from 'antd'
-import { useState } from 'react'
-import styles from '../styles/sign.module.css'
-import { useAuth } from '../contexts/AuthContext'
-import Head from 'next/head'
-import Link from 'next/link'
-import {useRouter} from 'next/router'
+import Button from "../components/Button";
+import { useState } from "react";
+import styles from "../styles/sass/auth.module.scss";
+import { useAuth } from "../contexts/AuthContext";
+import { Formik } from "formik";
+import Input from "../components/Input";
+import Head from "next/head";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { loginSchema } from '../utils/schemas'
 
-const { Title, Text } = Typography
 export default function Login() {
-  const router = useRouter()
-  const { login } = useAuth()
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
+  const router = useRouter();
+  const { login } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-
-  async function onFinish(values) {
-    setLoading(true)
-    const { email, password } = values
+  async function onFinish({ email, password }) {
+    setLoading(true);
 
     try {
-      setError('')
-      await login(email, password)
-      router.push('/')
-
-    } catch(err) {
-      setError(err)
+      setError("");
+      await login(email, password);
+      router.push("/");
+    } catch (err) {
+      setError(err);
     }
-    setLoading(false)
-
+    setLoading(false);
   }
   return (
     <div className={styles.middle_container}>
       <Head>
-        <meta 
-          name="description" 
+        <meta
+          name="description"
           content="Store your ingredients and recipes nutrition values so you can stop worring about them"
         />
         <title>Log In - Nutrition cooking</title>
       </Head>
-      <Form 
-        className={styles.middle_box}
-        onFinish={onFinish}
+      <Formik
+        initialValues={{
+          email:"",
+          password:""
+        }}
+        validationSchema={loginSchema}
+        onSubmit={onFinish}
       >
-        <Row>
-          <Col span={24}>
-            <Title className="text-center">Log In</Title>
-          </Col>
-        </Row>
-        {error && <Alert message={error} type="error" showIcon />}
-        <br></br>
-        <Form.Item
-          name="email"
-          rules={[
-            {
-              required: true,
-              message: 'Please input your email!',
-            },
-          ]}
-        >
-          <Input 
-            type="email" 
-            placeholder="Email"
-          />
-        </Form.Item>
-        <Form.Item
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: 'Please input your password!',
-            },
-          ]}
-        >
-          <Input 
-            type="password" 
-            placeholder="Password"
-          />
-        </Form.Item>
-        
-        <Form.Item>
-          <div className="flex flex-hc">
-            <Button 
-              type="primary"
-              size="large"
-              htmlType="submit"
-              block
-              loading={loading}
-            >
-              Sign Up
-            </Button>
-
-          </div>
-        </Form.Item>
-        <Row justify="center">
-          <Col span={24}>
-            <Text className="text-center block">
-              Don't have an account?{' '} 
-              <Link href="/signup">
-                  Sign Up
-              </Link>
-            </Text>
-          </Col>
-        </Row>
-      </Form>
-      
+        {(formik) => (
+          <form className="log_form" onSubmit={formik.handleSubmit}>
+            <h1 className={`md-26 ${styles.title}`}>Log In</h1>
+            {error && <div className={styles.error}>{error} </div>}
+            <div className="form_group">
+              <Input
+                id="email"
+                label="Email"
+                {...formik.getFieldProps("email")}
+                type="email"
+                error={formik.errors.email}
+                touched={formik.touched.email}
+                placeholder="Email"
+              />
+              <Input
+                id="password"
+                label="Password"
+                {...formik.getFieldProps("password")}
+                type="password"
+                error={formik.errors.password}
+                touched={formik.touched.password}
+                placeholder="Password"
+              />
+            </div>
+            <div className="flex flex-hc">
+              <Button loading={loading}>Log In</Button>
+            </div>
+            <p className={styles.info}>
+              Don't have an account? <Link href="/signup">Sign Up</Link>
+            </p>
+          </form>
+        )}
+      </Formik>
     </div>
-  )
+  );
 }

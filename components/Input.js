@@ -1,5 +1,6 @@
 import styles from "../styles/sass/components/input.module.scss";
 import { classList } from "../functions";
+import { number } from "yup/lib/locale";
 
 export default function Input({
   small,
@@ -34,12 +35,13 @@ export default function Input({
     }
     cb?.(e);
   };
-
+  let inputType = (type === 'number')? 'text': type;
   return (
     <div className={containerClasses}>
       <label>
         <input
           {...props}
+          type={inputType}
           onChange={(e) => handleChange(e, props.onChange)}
           className={inputClasses}
         />
