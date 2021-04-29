@@ -29,6 +29,7 @@ export const signout = async () => {
     })
     if(response.status === 200) {
       localStorage.removeItem('refreshToken')
+      window.location.replace("/");
       return true
     }
   }

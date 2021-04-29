@@ -5,14 +5,17 @@ import {
   faEgg,
   faUtensils,
   faInfoCircle,
+  faSignOutAlt
 } from "@fortawesome/free-solid-svg-icons";
 import styles from "../styles/sass/components/menu.module.scss";
 import { useUI } from "../contexts/UIContext";
+import { useAuth } from '../contexts/AuthContext';
 import { classList } from "../functions/index";
 
 export default function MenuDrawer() {
   const { showMenu, setShowMenu } = useUI();
   const router = useRouter();
+  const { logout } = useAuth()
 
   const menuClasses = classList({
     [styles.menu]: true,
@@ -49,6 +52,9 @@ export default function MenuDrawer() {
             icon={<FontAwesomeIcon icon={faInfoCircle} />}
           />
         </ul>
+        <div className={styles.footer}>
+          <button onClick={()=>{logout()}} className={styles.logout}><div><FontAwesomeIcon icon={faSignOutAlt} /><span class="md-16"> Log Out</span></div></button>
+        </div>
       </div>
       <div onClick={() => setShowMenu(false)} className={overlayClasses}></div>
     </>
