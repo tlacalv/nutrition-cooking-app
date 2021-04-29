@@ -1,6 +1,5 @@
 import Head from "next/head";
 import MenuDrawer from "../components/MenuDrawer";
-import styles from "../styles/layout.module.css";
 import React, { useEffect } from "react";
 import SearchBar from "./SearchBar";
 import MenuButton from "./MenuButton";
