@@ -1,7 +1,5 @@
 import "fontsource-roboto";
 import "fontsource-roboto/500.css";
-import "../styles/custom-antd.css";
-import "../styles/index.css";
 import "../styles/index.scss";
 import "../node_modules/normalize.css/normalize.css";
 import { AuthProvider } from "../contexts/AuthContext";

@@ -1,4 +1,4 @@
-import styles from '../styles/recipes.module.css'
+import styles from '../styles/sass/recipe.module.scss'
 
 export default function SearchElement(props) {
   return (
