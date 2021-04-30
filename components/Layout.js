@@ -2,10 +2,10 @@ import Head from "next/head";
 import MenuDrawer from "../components/MenuDrawer";
 import React, { useEffect } from "react";
 import SearchBar from "./SearchBar";
-import MenuButton from "./MenuButton";
+import Header from "./Header";
 import { useUI } from "../contexts/UIContext";
 
-export default function Layout({ children }) {
+export default function Layout({ children, ...props }) {
   const { setShowMenu } = useUI();
 
   const SearchComponent = children.find?.((child) => child.type === SearchBar);
@@ -14,7 +14,7 @@ export default function Layout({ children }) {
     setShowMenu(false);
   }, []);
   return (
-    <div className="layout">
+    <div className={`${props.className} layout`}>
       <Head>
         <meta
           name="description"
@@ -22,7 +22,7 @@ export default function Layout({ children }) {
         />
       </Head>
       <MenuDrawer />
-      <header>{SearchComponent ? SearchComponent : <MenuButton />}</header>
+      <header>{SearchComponent ? SearchComponent : <Header>{props.title}</Header>}</header>
       <div
         style={{
           margin: "24px 16px",
