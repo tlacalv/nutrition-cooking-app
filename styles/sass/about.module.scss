@@ -16,12 +16,18 @@
     background-size: cover;
     background-position: center;
     z-index: -1;
-    filter: saturate(80%) brightness(.6) opacity(.7);
+    filter: saturate(80%) brightness(.6);
   }
+}
+.header{
+  display: flex;
+  height: 66px;
+  align-items: center;
+  padding: 0 10px;
 }
 .title {
   margin: 0 1rem;
-  color: colors.$gray-1;
+  color: colors.$white;
 }
 .content{
   background: colors.$white;
