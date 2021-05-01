@@ -6,6 +6,7 @@ import Input from "../components/Input";
 import { useAuth } from "../contexts/AuthContext";
 import Head from "next/head";
 import { registerSchema } from "../utils/schemas";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -43,6 +44,11 @@ export default function Signup() {
         />
         <title>Sign up - Nutrition cooking</title>
       </Head>
+      <div className={styles.link}>
+        <Link href="/">
+          <Image src="/logo.svg" width={200} height={50} />
+        </Link>
+      </div>
       <Formik
         initialValues={{
           name: "",

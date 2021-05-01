@@ -6,8 +6,9 @@ import { Formik } from "formik";
 import Input from "../components/Input";
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/router";
-import { loginSchema } from '../utils/schemas'
+import { loginSchema } from "../utils/schemas";
 
 export default function Login() {
   const router = useRouter();
@@ -21,7 +22,7 @@ export default function Login() {
     try {
       setError("");
       await login(email, password);
-      router.push("/");
+      router.push("/recipes");
     } catch (err) {
       setError(err);
     }
@@ -36,10 +37,15 @@ export default function Login() {
         />
         <title>Log In - Nutrition cooking</title>
       </Head>
+      <div className={styles.link}>
+        <Link href="/">
+          <Image src="/logo.svg" width={200} height={50} />
+        </Link>
+      </div>
       <Formik
         initialValues={{
-          email:"",
-          password:""
+          email: "",
+          password: "",
         }}
         validationSchema={loginSchema}
         onSubmit={onFinish}
