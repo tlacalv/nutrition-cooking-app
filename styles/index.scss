@@ -26,11 +26,13 @@ body {
   margin: 0;
   color: rgba(0, 0, 0, 0.85);
   font-size: 14px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-variant: tabular-nums;
   line-height: 1.5715;
   background-color: #fff;
-  font-feature-settings: 'tnum';
+  font-feature-settings: "tnum";
 }
 a {
   color: #1890ff;
@@ -78,44 +80,49 @@ a[disabled] {
 *:focus::-moz-focus-inner {
   border: none;
 }
-.rg-10{
+.rg-10 {
   font-size: 10px;
   font-weight: 400;
 }
-.rg-24{
+.rg-24 {
   font-size: 18pt;
   font-weight: 400;
 }
-.rg-16{
+.rg-16 {
   font-size: 1rem;
   font-weight: 400;
 }
 
-.md-16{
+.md-16 {
   font-size: 16px;
   font-weight: 500;
 }
-.md-26{
+.md-26 {
   font-size: 26px;
   font-weight: 500;
 }
-.md-12{
+.md-12 {
   font-size: 12px;
   font-weight: 500;
 }
-.md-14{
+.md-14 {
   font-size: 14px;
   font-weight: 500;
 }
-.rg-26{
+.rg-26 {
   font-size: 1.65rem;
   font-weight: 400;
 }
-.rg-20{
+.rg-20 {
   font-size: 1.25rem;
   font-weight: 400;
 }
-h1,h2,h3,h4,h5,h6{
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
 }
 
@@ -124,27 +131,26 @@ h1,h2,h3,h4,h5,h6{
   border-radius: 50%;
   transform: scale(0);
   animation: ripple 600ms linear;
-  background-color: rgba($color: #fff, $alpha: .7);
+  background-color: rgba($color: #fff, $alpha: 0.7);
 }
 
-.regular_form {
+.regular_form, .compact_form {
   display: flex;
   flex-direction: column;
   margin: 2rem auto;
-  padding: .8rem;
+  padding: 0.8rem 0.8rem 1.5rem 0.8rem;
+  width: 100%;
+  max-width: 700px;
 }
 .compact_form {
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  padding: .8rem;
+  margin-top: 0;
 }
 .form_group {
   display: flex;
   flex-direction: column;
   margin-bottom: 2rem;
 }
-.error_box{
+.error_box {
   color: colors.$red-1;
   background-color: colors.$red-5;
   padding: 1rem;
@@ -152,13 +158,13 @@ h1,h2,h3,h4,h5,h6{
 }
 .addBtn {
   position: fixed !important;
-  bottom: calc(100vh/20);
-  right: calc(100vw/20);
+  bottom: calc(100vh / 20);
+  right: calc(100vw / 20);
 }
 .grid {
   display: grid;
   grid-gap: 10px;
-  grid-template-columns: repeat(auto-fill, minmax(320px,320px));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 320px));
   align-items: center;
   justify-content: center;
   grid-auto-rows: 20px;
@@ -173,7 +179,7 @@ h1,h2,h3,h4,h5,h6{
   z-index: 300;
   top: -15rem;
   left: 50%;
-  padding: .3rem 1rem;
+  padding: 0.3rem 1rem;
   animation: message 4000ms ease-in-out;
   animation-fill-mode: forwards;
   border-radius: 10px;
@@ -200,13 +206,13 @@ h1,h2,h3,h4,h5,h6{
 }
 @keyframes message {
   20% {
-    top: 1rem
+    top: 1rem;
   }
   90% {
     top: 1rem;
     opacity: 1;
   }
-  100%{
+  100% {
     top: 1rem;
     opacity: 0;
   }
@@ -219,11 +225,20 @@ h1,h2,h3,h4,h5,h6{
 }
 
 //Login
-.log_form{
+.log_form {
   background: white;
   width: 95%;
-  padding: .5rem;
+  padding: 0.5rem;
   max-width: 500px;
   border-radius: variables.$radius-2;
   box-shadow: variables.$shadow;
+}
+
+@media screen and (min-width: 770px) {
+  .regular_form, .compact_form {
+    padding: 0.8rem 1.5rem 1.5rem 1.5rem;
+    background: white;
+    border-radius: variables.$radius-2;
+    box-shadow: variables.$shadow;
+  }
 }
