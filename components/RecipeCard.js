@@ -26,12 +26,17 @@ const RecipeCard = React.forwardRef((props, ref) => {
         {},
         { Authorization: `Bearer ${JWT}` }
       );
-      mutate(["recipes", JWT], async (data) => {
-        const newData = data.data.filter((item) => {
-          return !(item._id === recipe._id);
-        });
-        return { ...data, data: newData };
-      });
+      mutate(["recipes", JWT]);
+      mutate(
+        ["recipes", JWT],
+        (data) => {
+          const newData = data.data.filter((item) => {
+            return !(item._id === recipe._id);
+          });
+          return { ...data, data: newData };
+        },
+        false
+      );
       setMessage("Element deleted");
     } catch (error) {
       message.error("Something went wrong while deleting");
