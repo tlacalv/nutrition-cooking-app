@@ -24,8 +24,8 @@ export default function Input({
     "rg-16": true,
     [styles.label]: true,
     [styles.small_label]: small,
-    [styles.label_active]: (props.value !== ''),
-    [styles.white]: whiteLabel
+    [styles.label_active]: props.value !== "",
+    [styles.white]: whiteLabel,
   });
   const handleChange = (e, cb) => {
     if (type === "number") {
@@ -35,7 +35,7 @@ export default function Input({
     }
     cb?.(e);
   };
-  let inputType = (type === 'number')? 'text': type;
+  let inputType = type === "number" ? "text" : type;
   return (
     <div className={containerClasses}>
       <label>
